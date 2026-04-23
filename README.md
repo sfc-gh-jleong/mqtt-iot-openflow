@@ -8,11 +8,11 @@ OpenFlow NiFi flow definitions for an end-to-end IoT battery telemetry pipeline 
 [ mqtt-publisher runtime ]          [ mqtt-subscriber runtime ]
   MQTT Publisher flow                 Battery MQTT Telemetry flow
   GenerateFlowFile                    ConsumeMQTT
-       ↓                                   ↓
+       |                                   |
   UpdateAttribute                    Flatten Payload (Jolt)
-       ↓                                   ↓
-  Publish to HiveMQ  ──── MQTT ────► PublishSnowpipeStreaming v2
-                                           ↓
+       |                                   |
+  Publish to HiveMQ  ---- MQTT ----> PublishSnowpipeStreaming v2
+                                           |
                               SNOWFLAKE_DEMO.MQTT.MQTT_TELEMETRY
 ```
 
@@ -33,9 +33,9 @@ Generates synthetic IoT battery telemetry and publishes it to HiveMQ Cloud on to
 **Processors:**
 | Processor | Role |
 |-----------|------|
-| `Generate Telemetry` (GenerateFlowFile) | Produces a JSON battery record every 5 seconds using NiFi EL for randomised values across 5 batteries and 3 devices |
+| `Generate Telemetry` (GenerateFlowFile) | Produces a JSON battery record every 5 seconds using NiFi Expression Language for randomised values across 5 batteries and 3 devices |
 | `Set MQTT Topic` (UpdateAttribute) | Sets the `mqtt.topic` attribute to `battery/telemetry` |
-| `Publish to HiveMQ` (PublishMQTT) | Publishes the FlowFile content to HiveMQ Cloud over TLS (ssl://) |
+| `Publish to HiveMQ` (PublishMQTT) | Publishes the FlowFile content to HiveMQ Cloud over TLS (ssl://) with username/password authentication |
 
 **Generated payload example:**
 ```json
@@ -58,13 +58,13 @@ Generates synthetic IoT battery telemetry and publishes it to HiveMQ Cloud on to
 **Field reference:**
 | Field | Unit | Range |
 |-------|------|-------|
-| `VOLTAGE_MV` | millivolts | 2500–4200 (Li-ion) |
-| `CURRENT_MA` | milliamps (positive = discharging) | 0–5000 |
-| `TEMPERATURE_C` | Celsius | 15–45 |
-| `STATE_OF_CHARGE_PCT` | % | 0–100 |
-| `STATE_OF_HEALTH_PCT` | % | 80–100 |
-| `CYCLE_COUNT` | count | 0–500 |
-| `CAPACITY_REMAINING_MAH` | milliamp-hours | 2500–5000 |
+| `VOLTAGE_MV` | millivolts | 2500-4200 (Li-ion cell range) |
+| `CURRENT_MA` | milliamps (positive = discharging) | 0-5000 |
+| `TEMPERATURE_C` | Celsius | 15-45 |
+| `STATE_OF_CHARGE_PCT` | percent | 0-100 |
+| `STATE_OF_HEALTH_PCT` | percent | 80-100 |
+| `CYCLE_COUNT` | count | 0-500 |
+| `CAPACITY_REMAINING_MAH` | milliamp-hours | 2500-5000 |
 
 ---
 
@@ -79,13 +79,43 @@ Subscribes to HiveMQ Cloud on topic `battery/telemetry/#`, transforms the incomi
 **Processors:**
 | Processor | Role |
 |-----------|------|
-| `ConsumeMQTT - HiveMQ` (ConsumeMQTT) | Subscribes to HiveMQ Cloud and receives battery telemetry messages |
-| `Flatten Payload` (JoltTransformJSON) | Shifts JSON field names from the publisher format to the Snowflake column names |
-| `PublishSnowpipeStreaming - Telemetry` (PublishSnowpipeStreaming v2) | Streams transformed records directly into Snowflake via the Snowpipe Streaming API |
+| `ConsumeMQTT - HiveMQ` (ConsumeMQTT) | Subscribes to HiveMQ Cloud over TLS and receives battery telemetry messages |
+| `Flatten Payload` (JoltTransformJSON) | Shifts JSON field names from the publisher format to Snowflake column names |
+| `PublishSnowpipeStreaming - Telemetry` (PublishSnowpipeStreaming v2) | Streams transformed records directly into Snowflake via the Snowpipe Streaming API using SPCS managed authentication |
 
 **Snowflake destination:** `SNOWFLAKE_DEMO.MQTT.MQTT_TELEMETRY`
 
 Authentication uses `SNOWFLAKE_MANAGED` (SPCS session token) — no key-pair credentials required.
+
+---
+
+## Snowflake Objects
+
+| Object | Details |
+|--------|---------|
+| Schema | `SNOWFLAKE_DEMO.MQTT` |
+| Landing table | `SNOWFLAKE_DEMO.MQTT.MQTT_TELEMETRY` |
+| Stage | `SNOWFLAKE_DEMO.MQTT.MQTT_INGEST_STAGE` |
+| Pipe | `SNOWFLAKE_DEMO.MQTT.MQTT_INGEST_PIPE` |
+
+**Table schema:**
+```sql
+CREATE TABLE SNOWFLAKE_DEMO.MQTT.MQTT_TELEMETRY (
+  BATTERY_ID              VARCHAR(20),
+  DEVICE_ID               VARCHAR(20),
+  TIMESTAMP_MS            VARCHAR(30),
+  VOLTAGE_MV              NUMBER,
+  CURRENT_MA              NUMBER,
+  TEMPERATURE_C           NUMBER,
+  STATE_OF_CHARGE_PCT     NUMBER,
+  STATE_OF_HEALTH_PCT     NUMBER,
+  CYCLE_COUNT             NUMBER,
+  CAPACITY_REMAINING_MAH  NUMBER,
+  IS_CHARGING             VARCHAR(5),
+  ERROR_CODE              VARCHAR(20),
+  INGEST_TIME             TIMESTAMP_LTZ DEFAULT CURRENT_TIMESTAMP()
+);
+```
 
 ---
 
@@ -96,8 +126,5 @@ Authentication uses `SNOWFLAKE_MANAGED` (SPCS session token) — no key-pair cre
 | MQTT Broker | HiveMQ Cloud (TLS, port 8883) |
 | Publisher runtime | `mqttpublisher` — Snowflake OpenFlow SPCS |
 | Subscriber runtime | `mqtt` — Snowflake OpenFlow SPCS |
-| EAI | `HIVEMQ_EAI` — covers HiveMQ Cloud and `api.github.com` endpoints |
+| External Access Integration | `HIVEMQ_EAI` — covers HiveMQ Cloud and `api.github.com` |
 | Network rule | `OPENFLOW.OPENFLOW.MQTT_GITHUB_REGISTRY_NETWORK_RULE` |
-| Snowflake table | `SNOWFLAKE_DEMO.MQTT.MQTT_TELEMETRY` |
-| Snowflake stage | `SNOWFLAKE_DEMO.MQTT.MQTT_INGEST_STAGE` |
-| Snowflake pipe | `SNOWFLAKE_DEMO.MQTT.MQTT_INGEST_PIPE` |
