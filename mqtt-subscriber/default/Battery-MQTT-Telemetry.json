@@ -1,0 +1,11 @@
+{
+  "flow" : {
+    "createdTimestamp" : 1776974328818,
+    "description" : "Flow: Battery MQTT Telemetry",
+    "identifier" : "Battery-MQTT-Telemetry",
+    "lastModifiedTimestamp" : 1776974328818,
+    "name" : "Battery MQTT Telemetry",
+    "versionCount" : 0
+  },
+  "latest" : false
+}
