@@ -528,7 +528,7 @@
         "Transform Cache Size" : "1",
         "Retain Unicode Escape Sequences" : "false",
         "Pretty Print" : "false",
-        "Jolt Specification" : "[{\"operation\":\"shift\",\"spec\":{\"device_id\":\"DEVICE_ID\",\"timestamp\":\"MSG_TIMESTAMP\",\"value\":\"MSG_VALUE\"}}]"
+        "Jolt Specification" : "[{\"operation\":\"shift\",\"spec\":{\"BATTERY_ID\":\"BATTERY_ID\",\"DEVICE_ID\":\"DEVICE_ID\",\"TIMESTAMP_MS\":\"TIMESTAMP_MS\",\"VOLTAGE_MV\":\"VOLTAGE_MV\",\"CURRENT_MA\":\"CURRENT_MA\",\"TEMPERATURE_C\":\"TEMPERATURE_C\",\"STATE_OF_CHARGE_PCT\":\"STATE_OF_CHARGE_PCT\",\"STATE_OF_HEALTH_PCT\":\"STATE_OF_HEALTH_PCT\",\"CYCLE_COUNT\":\"CYCLE_COUNT\",\"CAPACITY_REMAINING_MAH\":\"CAPACITY_REMAINING_MAH\",\"IS_CHARGING\":\"IS_CHARGING\",\"ERROR_CODE\":\"ERROR_CODE\"}}]"
       },
       "propertyDescriptors" : {
         "JSON Source" : {
@@ -848,10 +848,10 @@
       },
       "properties" : {
         "Table" : "MQTT_TELEMETRY",
-        "Transfer Strategy" : "MANAGED",
+        "Transfer Strategy" : "FILE_FRAGMENTS",
         "File Fragment Size" : "64 MB",
         "Offset Tracking Timeout" : "90 s",
-        "Channel Group" : "SHARED",
+        "Channel Group" : "BATTERY-FF",
         "Schema" : "MQTT",
         "Pipe" : "MQTT_INGEST_PIPE",
         "Offset Tracking Resolution" : "DISABLED",
@@ -1033,6 +1033,6 @@
   "snapshotMetadata" : {
     "author" : "JLEONG",
     "flowIdentifier" : "Battery-MQTT-Telemetry",
-    "timestamp" : 1776972208211
+    "timestamp" : 1776974208505
   }
 }
