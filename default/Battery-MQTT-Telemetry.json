@@ -19,13 +19,13 @@
       "destination" : {
         "comments" : "",
         "groupId" : "flow-contents-group",
-        "id" : "8554e864-3b9a-3633-ba62-443df9d82bae",
-        "name" : "PutSnowpipeStreaming - Telemetry",
+        "id" : "a67d172b-a4d8-3229-9ef2-019673481042",
+        "name" : "PublishSnowpipeStreaming - Telemetry",
         "type" : "PROCESSOR"
       },
       "flowFileExpiration" : "0 sec",
       "groupIdentifier" : "flow-contents-group",
-      "identifier" : "3d3191f4-7544-317f-9847-cc2d05c55862",
+      "identifier" : "131f7fd5-0294-302e-a7e3-161aa50cf24e",
       "labelIndex" : 1,
       "loadBalanceCompression" : "DO_NOT_COMPRESS",
       "loadBalanceStrategy" : "DO_NOT_LOAD_BALANCE",
@@ -36,6 +36,34 @@
         "groupId" : "flow-contents-group",
         "id" : "6140c8fa-5aa7-331a-8972-71010cafb924",
         "name" : "Flatten Payload",
+        "type" : "PROCESSOR"
+      },
+      "zIndex" : 0
+    }, {
+      "backPressureDataSizeThreshold" : "1 GB",
+      "backPressureObjectThreshold" : 10000,
+      "bends" : [ ],
+      "componentType" : "CONNECTION",
+      "destination" : {
+        "comments" : "",
+        "groupId" : "flow-contents-group",
+        "id" : "815672ed-8c53-3bc1-90fe-82864c41406e",
+        "name" : "Funnel",
+        "type" : "FUNNEL"
+      },
+      "flowFileExpiration" : "0 sec",
+      "groupIdentifier" : "flow-contents-group",
+      "identifier" : "67e2a737-9299-3a92-8e41-12f62e2cacc6",
+      "labelIndex" : 1,
+      "loadBalanceCompression" : "DO_NOT_COMPRESS",
+      "loadBalanceStrategy" : "DO_NOT_LOAD_BALANCE",
+      "prioritizers" : [ ],
+      "selectedRelationships" : [ "failure" ],
+      "source" : {
+        "comments" : "",
+        "groupId" : "flow-contents-group",
+        "id" : "a67d172b-a4d8-3229-9ef2-019673481042",
+        "name" : "PublishSnowpipeStreaming - Telemetry",
         "type" : "PROCESSOR"
       },
       "zIndex" : 0
@@ -64,34 +92,6 @@
         "groupId" : "flow-contents-group",
         "id" : "a4405b7e-0273-335b-be5c-8d529ae88ede",
         "name" : "ConsumeMQTT - HiveMQ",
-        "type" : "PROCESSOR"
-      },
-      "zIndex" : 0
-    }, {
-      "backPressureDataSizeThreshold" : "1 GB",
-      "backPressureObjectThreshold" : 10000,
-      "bends" : [ ],
-      "componentType" : "CONNECTION",
-      "destination" : {
-        "comments" : "",
-        "groupId" : "flow-contents-group",
-        "id" : "815672ed-8c53-3bc1-90fe-82864c41406e",
-        "name" : "Funnel",
-        "type" : "FUNNEL"
-      },
-      "flowFileExpiration" : "0 sec",
-      "groupIdentifier" : "flow-contents-group",
-      "identifier" : "9197917b-a3e6-38d6-a279-e7d06eef0613",
-      "labelIndex" : 1,
-      "loadBalanceCompression" : "DO_NOT_COMPRESS",
-      "loadBalanceStrategy" : "DO_NOT_LOAD_BALANCE",
-      "prioritizers" : [ ],
-      "selectedRelationships" : [ "failure" ],
-      "source" : {
-        "comments" : "",
-        "groupId" : "flow-contents-group",
-        "id" : "8554e864-3b9a-3633-ba62-443df9d82bae",
-        "name" : "PutSnowpipeStreaming - Telemetry",
         "type" : "PROCESSOR"
       },
       "zIndex" : 0
@@ -500,209 +500,6 @@
     },
     "processGroups" : [ ],
     "processors" : [ {
-      "autoTerminatedRelationships" : [ "failure", "success" ],
-      "backoffMechanism" : "PENALIZE_FLOWFILE",
-      "bulletinLevel" : "WARN",
-      "bundle" : {
-        "artifact" : "runtime-snowpipe-processors-nar",
-        "group" : "com.snowflake.openflow.runtime",
-        "version" : "2026.4.16.18"
-      },
-      "comments" : "",
-      "componentType" : "PROCESSOR",
-      "concurrentlySchedulableTaskCount" : 1,
-      "executionNode" : "ALL",
-      "groupIdentifier" : "flow-contents-group",
-      "identifier" : "439b9b26-1030-37ef-92cb-f74c99b42dfb",
-      "maxBackoffPeriod" : "10 mins",
-      "name" : "PutSnowpipeStreaming - V2 Direct",
-      "penaltyDuration" : "30 sec",
-      "position" : {
-        "x" : 632.0,
-        "y" : -312.0
-      },
-      "properties" : {
-        "Table" : "RAW_TELEMETRY_STREAM",
-        "Max Batch Size" : "10000",
-        "Schema" : "STREAMING_V2",
-        "Max Tasks Per Group" : "1",
-        "Record Reader" : "af36eb88-f2f1-3007-ba38-b4b8a217a820",
-        "Iceberg Enabled" : "false",
-        "Connection Strategy" : "STANDARD",
-        "Role" : "SYSADMIN",
-        "Snowpipe Channel Prefix" : "${hostname(false)}",
-        "Client Lag" : "1 sec",
-        "Authentication Strategy" : "SNOWFLAKE_MANAGED",
-        "Delivery Guarantee" : "At least once",
-        "Binary Encoding Format" : "BASE64",
-        "Database" : "CONNECTED_SERVICES_POC"
-      },
-      "propertyDescriptors" : {
-        "Account" : {
-          "displayName" : "Account",
-          "dynamic" : false,
-          "identifiesControllerService" : false,
-          "name" : "Account",
-          "sensitive" : false
-        },
-        "User" : {
-          "displayName" : "User",
-          "dynamic" : false,
-          "identifiesControllerService" : false,
-          "name" : "User",
-          "sensitive" : false
-        },
-        "Table" : {
-          "displayName" : "Table",
-          "dynamic" : false,
-          "identifiesControllerService" : false,
-          "name" : "Table",
-          "sensitive" : false
-        },
-        "Concurrency Group" : {
-          "displayName" : "Concurrency Group",
-          "dynamic" : false,
-          "identifiesControllerService" : false,
-          "name" : "Concurrency Group",
-          "sensitive" : false
-        },
-        "Max Batch Size" : {
-          "displayName" : "Max Batch Size",
-          "dynamic" : false,
-          "identifiesControllerService" : false,
-          "name" : "Max Batch Size",
-          "sensitive" : false
-        },
-        "Schema" : {
-          "displayName" : "Schema",
-          "dynamic" : false,
-          "identifiesControllerService" : false,
-          "name" : "Schema",
-          "sensitive" : false
-        },
-        "Max Tasks Per Group" : {
-          "displayName" : "Max Tasks Per Group",
-          "dynamic" : false,
-          "identifiesControllerService" : false,
-          "name" : "Max Tasks Per Group",
-          "sensitive" : false
-        },
-        "Record Offset" : {
-          "displayName" : "Record Offset",
-          "dynamic" : false,
-          "identifiesControllerService" : false,
-          "name" : "Record Offset",
-          "sensitive" : false
-        },
-        "Record Reader" : {
-          "displayName" : "Record Reader",
-          "dynamic" : false,
-          "identifiesControllerService" : true,
-          "name" : "Record Reader",
-          "sensitive" : false
-        },
-        "Iceberg Enabled" : {
-          "displayName" : "Iceberg Enabled",
-          "dynamic" : false,
-          "identifiesControllerService" : false,
-          "name" : "Iceberg Enabled",
-          "sensitive" : false
-        },
-        "Snowpipe Channel Index" : {
-          "displayName" : "Snowpipe Channel Index",
-          "dynamic" : false,
-          "identifiesControllerService" : false,
-          "name" : "Snowpipe Channel Index",
-          "sensitive" : false
-        },
-        "Private Key Service" : {
-          "displayName" : "Private Key Service",
-          "dynamic" : false,
-          "identifiesControllerService" : true,
-          "name" : "Private Key Service",
-          "sensitive" : false
-        },
-        "Connection Strategy" : {
-          "displayName" : "Connection Strategy",
-          "dynamic" : false,
-          "identifiesControllerService" : false,
-          "name" : "Connection Strategy",
-          "sensitive" : false
-        },
-        "Role" : {
-          "displayName" : "Role",
-          "dynamic" : false,
-          "identifiesControllerService" : false,
-          "name" : "Role",
-          "sensitive" : false
-        },
-        "Record Offset Strategy" : {
-          "displayName" : "Record Offset Strategy",
-          "dynamic" : false,
-          "identifiesControllerService" : false,
-          "name" : "Record Offset Strategy",
-          "sensitive" : false
-        },
-        "Snowpipe Channel Prefix" : {
-          "displayName" : "Snowpipe Channel Prefix",
-          "dynamic" : false,
-          "identifiesControllerService" : false,
-          "name" : "Snowpipe Channel Prefix",
-          "sensitive" : false
-        },
-        "Client Lag" : {
-          "displayName" : "Client Lag",
-          "dynamic" : false,
-          "identifiesControllerService" : false,
-          "name" : "Client Lag",
-          "sensitive" : false
-        },
-        "Authentication Strategy" : {
-          "displayName" : "Authentication Strategy",
-          "dynamic" : false,
-          "identifiesControllerService" : false,
-          "name" : "Authentication Strategy",
-          "sensitive" : false
-        },
-        "Delivery Guarantee" : {
-          "displayName" : "Delivery Guarantee",
-          "dynamic" : false,
-          "identifiesControllerService" : false,
-          "name" : "Delivery Guarantee",
-          "sensitive" : false
-        },
-        "Binary Encoding Format" : {
-          "displayName" : "Binary Encoding Format",
-          "dynamic" : false,
-          "identifiesControllerService" : false,
-          "name" : "Binary Encoding Format",
-          "sensitive" : false
-        },
-        "Record Offset Record Path" : {
-          "displayName" : "Record Offset Record Path",
-          "dynamic" : false,
-          "identifiesControllerService" : false,
-          "name" : "Record Offset Record Path",
-          "sensitive" : false
-        },
-        "Database" : {
-          "displayName" : "Database",
-          "dynamic" : false,
-          "identifiesControllerService" : false,
-          "name" : "Database",
-          "sensitive" : false
-        }
-      },
-      "retriedRelationships" : [ ],
-      "retryCount" : 10,
-      "runDurationMillis" : 0,
-      "scheduledState" : "ENABLED",
-      "schedulingPeriod" : "0 sec",
-      "schedulingStrategy" : "TIMER_DRIVEN",
-      "style" : { },
-      "type" : "com.snowflake.openflow.runtime.processors.snowpipe.PutSnowpipeStreaming",
-      "yieldDuration" : "1 sec"
-    }, {
       "autoTerminatedRelationships" : [ "failure" ],
       "backoffMechanism" : "PENALIZE_FLOWFILE",
       "bulletinLevel" : "WARN",
@@ -731,7 +528,7 @@
         "Transform Cache Size" : "1",
         "Retain Unicode Escape Sequences" : "false",
         "Pretty Print" : "false",
-        "Jolt Specification" : "[{\"operation\":\"shift\",\"spec\":{\"CUSTOMER_ID\":\"CUSTOMER_ID\",\"BATTERY_ID\":\"BATTERY_ID\",\"MESSAGE_TYPE\":\"MESSAGE_TYPE\",\"PAYLOAD\":{\"current\":\"CURRENT_VAL\",\"soc_pct\":\"SOC_PCT\",\"temperature\":\"TEMPERATURE\",\"timestamp\":\"TIMESTAMP_VAL\",\"voltage\":\"VOLTAGE\",\"@\":\"PAYLOAD\"}}}]"
+        "Jolt Specification" : "[{\"operation\":\"shift\",\"spec\":{\"device_id\":\"DEVICE_ID\",\"timestamp\":\"MSG_TIMESTAMP\",\"value\":\"MSG_VALUE\"}}]"
       },
       "propertyDescriptors" : {
         "JSON Source" : {
@@ -823,210 +620,6 @@
       "type" : "org.apache.nifi.processors.jolt.JoltTransformJSON",
       "yieldDuration" : "1 sec"
     }, {
-      "autoTerminatedRelationships" : [ "success" ],
-      "backoffMechanism" : "PENALIZE_FLOWFILE",
-      "bulletinLevel" : "WARN",
-      "bundle" : {
-        "artifact" : "runtime-snowpipe-processors-nar",
-        "group" : "com.snowflake.openflow.runtime",
-        "version" : "2026.4.16.18"
-      },
-      "comments" : "",
-      "componentType" : "PROCESSOR",
-      "concurrentlySchedulableTaskCount" : 1,
-      "executionNode" : "ALL",
-      "groupIdentifier" : "flow-contents-group",
-      "identifier" : "8554e864-3b9a-3633-ba62-443df9d82bae",
-      "maxBackoffPeriod" : "10 mins",
-      "name" : "PutSnowpipeStreaming - Telemetry",
-      "penaltyDuration" : "30 sec",
-      "position" : {
-        "x" : -144.0,
-        "y" : -72.0
-      },
-      "properties" : {
-        "Table" : "RAW_TELEMETRY_TBL",
-        "Max Batch Size" : "10000",
-        "Schema" : "COMMON",
-        "Max Tasks Per Group" : "1",
-        "Record Reader" : "af36eb88-f2f1-3007-ba38-b4b8a217a820",
-        "Iceberg Enabled" : "false",
-        "Connection Strategy" : "STANDARD",
-        "Role" : "SYSADMIN",
-        "Record Offset Strategy" : "None",
-        "Snowpipe Channel Prefix" : "${hostname(false)}",
-        "Client Lag" : "1 sec",
-        "Authentication Strategy" : "SNOWFLAKE_MANAGED",
-        "Delivery Guarantee" : "At least once",
-        "Binary Encoding Format" : "BASE64",
-        "Database" : "CONNECTED_SERVICES_POC"
-      },
-      "propertyDescriptors" : {
-        "Account" : {
-          "displayName" : "Account",
-          "dynamic" : false,
-          "identifiesControllerService" : false,
-          "name" : "Account",
-          "sensitive" : false
-        },
-        "User" : {
-          "displayName" : "User",
-          "dynamic" : false,
-          "identifiesControllerService" : false,
-          "name" : "User",
-          "sensitive" : false
-        },
-        "Table" : {
-          "displayName" : "Table",
-          "dynamic" : false,
-          "identifiesControllerService" : false,
-          "name" : "Table",
-          "sensitive" : false
-        },
-        "Concurrency Group" : {
-          "displayName" : "Concurrency Group",
-          "dynamic" : false,
-          "identifiesControllerService" : false,
-          "name" : "Concurrency Group",
-          "sensitive" : false
-        },
-        "Max Batch Size" : {
-          "displayName" : "Max Batch Size",
-          "dynamic" : false,
-          "identifiesControllerService" : false,
-          "name" : "Max Batch Size",
-          "sensitive" : false
-        },
-        "Schema" : {
-          "displayName" : "Schema",
-          "dynamic" : false,
-          "identifiesControllerService" : false,
-          "name" : "Schema",
-          "sensitive" : false
-        },
-        "Max Tasks Per Group" : {
-          "displayName" : "Max Tasks Per Group",
-          "dynamic" : false,
-          "identifiesControllerService" : false,
-          "name" : "Max Tasks Per Group",
-          "sensitive" : false
-        },
-        "Record Offset" : {
-          "displayName" : "Record Offset",
-          "dynamic" : false,
-          "identifiesControllerService" : false,
-          "name" : "Record Offset",
-          "sensitive" : false
-        },
-        "Record Reader" : {
-          "displayName" : "Record Reader",
-          "dynamic" : false,
-          "identifiesControllerService" : true,
-          "name" : "Record Reader",
-          "sensitive" : false
-        },
-        "Iceberg Enabled" : {
-          "displayName" : "Iceberg Enabled",
-          "dynamic" : false,
-          "identifiesControllerService" : false,
-          "name" : "Iceberg Enabled",
-          "sensitive" : false
-        },
-        "Snowpipe Channel Index" : {
-          "displayName" : "Snowpipe Channel Index",
-          "dynamic" : false,
-          "identifiesControllerService" : false,
-          "name" : "Snowpipe Channel Index",
-          "sensitive" : false
-        },
-        "Private Key Service" : {
-          "displayName" : "Private Key Service",
-          "dynamic" : false,
-          "identifiesControllerService" : true,
-          "name" : "Private Key Service",
-          "sensitive" : false
-        },
-        "Connection Strategy" : {
-          "displayName" : "Connection Strategy",
-          "dynamic" : false,
-          "identifiesControllerService" : false,
-          "name" : "Connection Strategy",
-          "sensitive" : false
-        },
-        "Role" : {
-          "displayName" : "Role",
-          "dynamic" : false,
-          "identifiesControllerService" : false,
-          "name" : "Role",
-          "sensitive" : false
-        },
-        "Record Offset Strategy" : {
-          "displayName" : "Record Offset Strategy",
-          "dynamic" : false,
-          "identifiesControllerService" : false,
-          "name" : "Record Offset Strategy",
-          "sensitive" : false
-        },
-        "Snowpipe Channel Prefix" : {
-          "displayName" : "Snowpipe Channel Prefix",
-          "dynamic" : false,
-          "identifiesControllerService" : false,
-          "name" : "Snowpipe Channel Prefix",
-          "sensitive" : false
-        },
-        "Client Lag" : {
-          "displayName" : "Client Lag",
-          "dynamic" : false,
-          "identifiesControllerService" : false,
-          "name" : "Client Lag",
-          "sensitive" : false
-        },
-        "Authentication Strategy" : {
-          "displayName" : "Authentication Strategy",
-          "dynamic" : false,
-          "identifiesControllerService" : false,
-          "name" : "Authentication Strategy",
-          "sensitive" : false
-        },
-        "Delivery Guarantee" : {
-          "displayName" : "Delivery Guarantee",
-          "dynamic" : false,
-          "identifiesControllerService" : false,
-          "name" : "Delivery Guarantee",
-          "sensitive" : false
-        },
-        "Binary Encoding Format" : {
-          "displayName" : "Binary Encoding Format",
-          "dynamic" : false,
-          "identifiesControllerService" : false,
-          "name" : "Binary Encoding Format",
-          "sensitive" : false
-        },
-        "Record Offset Record Path" : {
-          "displayName" : "Record Offset Record Path",
-          "dynamic" : false,
-          "identifiesControllerService" : false,
-          "name" : "Record Offset Record Path",
-          "sensitive" : false
-        },
-        "Database" : {
-          "displayName" : "Database",
-          "dynamic" : false,
-          "identifiesControllerService" : false,
-          "name" : "Database",
-          "sensitive" : false
-        }
-      },
-      "retriedRelationships" : [ ],
-      "retryCount" : 10,
-      "runDurationMillis" : 0,
-      "scheduledState" : "ENABLED",
-      "schedulingPeriod" : "0 sec",
-      "schedulingStrategy" : "TIMER_DRIVEN",
-      "style" : { },
-      "type" : "com.snowflake.openflow.runtime.processors.snowpipe.PutSnowpipeStreaming",
-      "yieldDuration" : "1 sec"
-    }, {
       "autoTerminatedRelationships" : [ ],
       "backoffMechanism" : "PENALIZE_FLOWFILE",
       "bulletinLevel" : "WARN",
@@ -1055,7 +648,7 @@
         "Last Will QoS Level" : "0",
         "Session State" : "true",
         "Quality of Service" : "1",
-        "Broker URI" : "ssl://9e99fefb67d84dd1a8c70654e2a78572.s1.eu.hivemq.cloud:8883",
+        "Broker URI" : "ssl://1a720034763944d0a28a49866a22cb78.s1.eu.hivemq.cloud:8883",
         "Connection Timeout" : "30",
         "SSL Context Service" : "f3ae55b5-43c7-3e2a-8e93-457396c49506",
         "Username" : "jleong",
@@ -1231,6 +824,203 @@
       "style" : { },
       "type" : "org.apache.nifi.processors.mqtt.ConsumeMQTT",
       "yieldDuration" : "1 sec"
+    }, {
+      "autoTerminatedRelationships" : [ "empty", "invalid", "success" ],
+      "backoffMechanism" : "PENALIZE_FLOWFILE",
+      "bulletinLevel" : "WARN",
+      "bundle" : {
+        "artifact" : "runtime-snowpipe-streaming-2-processors-nar",
+        "group" : "com.snowflake.openflow.runtime",
+        "version" : "2026.4.16.18"
+      },
+      "comments" : "",
+      "componentType" : "PROCESSOR",
+      "concurrentlySchedulableTaskCount" : 1,
+      "executionNode" : "ALL",
+      "groupIdentifier" : "flow-contents-group",
+      "identifier" : "a67d172b-a4d8-3229-9ef2-019673481042",
+      "maxBackoffPeriod" : "10 mins",
+      "name" : "PublishSnowpipeStreaming - Telemetry",
+      "penaltyDuration" : "30 sec",
+      "position" : {
+        "x" : -144.0,
+        "y" : -72.0
+      },
+      "properties" : {
+        "Table" : "MQTT_TELEMETRY",
+        "Transfer Strategy" : "MANAGED",
+        "File Fragment Size" : "64 MB",
+        "Offset Tracking Timeout" : "90 s",
+        "Channel Group" : "SHARED",
+        "Schema" : "MQTT",
+        "Pipe" : "MQTT_INGEST_PIPE",
+        "Offset Tracking Resolution" : "DISABLED",
+        "Role" : "SYSADMIN",
+        "Authentication Strategy" : "SNOWFLAKE_MANAGED",
+        "Database" : "SNOWFLAKE_DEMO",
+        "File Fragment Count" : "4",
+        "Channel Insert Timeout" : "30 s",
+        "Destination Type" : "TABLE",
+        "Web Client Service Provider" : "7a8d644a-3bc3-3118-a157-75a73e54b50f"
+      },
+      "propertyDescriptors" : {
+        "Account" : {
+          "displayName" : "Account",
+          "dynamic" : false,
+          "identifiesControllerService" : false,
+          "name" : "Account",
+          "sensitive" : false
+        },
+        "Offset Token Start Expression" : {
+          "displayName" : "Offset Token Start Expression",
+          "dynamic" : false,
+          "identifiesControllerService" : false,
+          "name" : "Offset Token Start Expression",
+          "sensitive" : false
+        },
+        "User" : {
+          "displayName" : "User",
+          "dynamic" : false,
+          "identifiesControllerService" : false,
+          "name" : "User",
+          "sensitive" : false
+        },
+        "Table" : {
+          "displayName" : "Table",
+          "dynamic" : false,
+          "identifiesControllerService" : false,
+          "name" : "Table",
+          "sensitive" : false
+        },
+        "Transfer Strategy" : {
+          "displayName" : "Transfer Strategy",
+          "dynamic" : false,
+          "identifiesControllerService" : false,
+          "name" : "Transfer Strategy",
+          "sensitive" : false
+        },
+        "File Fragment Size" : {
+          "displayName" : "File Fragment Size",
+          "dynamic" : false,
+          "identifiesControllerService" : false,
+          "name" : "File Fragment Size",
+          "sensitive" : false
+        },
+        "Offset Tracking Timeout" : {
+          "displayName" : "Offset Tracking Timeout",
+          "dynamic" : false,
+          "identifiesControllerService" : false,
+          "name" : "Offset Tracking Timeout",
+          "sensitive" : false
+        },
+        "Channel Group" : {
+          "displayName" : "Channel Group",
+          "dynamic" : false,
+          "identifiesControllerService" : false,
+          "name" : "Channel Group",
+          "sensitive" : false
+        },
+        "Schema" : {
+          "displayName" : "Schema",
+          "dynamic" : false,
+          "identifiesControllerService" : false,
+          "name" : "Schema",
+          "sensitive" : false
+        },
+        "Pipe" : {
+          "displayName" : "Pipe",
+          "dynamic" : false,
+          "identifiesControllerService" : false,
+          "name" : "Pipe",
+          "sensitive" : false
+        },
+        "Offset Tracking Resolution" : {
+          "displayName" : "Offset Tracking Resolution",
+          "dynamic" : false,
+          "identifiesControllerService" : false,
+          "name" : "Offset Tracking Resolution",
+          "sensitive" : false
+        },
+        "Private Key Service" : {
+          "displayName" : "Private Key Service",
+          "dynamic" : false,
+          "identifiesControllerService" : true,
+          "name" : "Private Key Service",
+          "sensitive" : false
+        },
+        "Offset Token Record Pointer" : {
+          "displayName" : "Offset Token Record Pointer",
+          "dynamic" : false,
+          "identifiesControllerService" : false,
+          "name" : "Offset Token Record Pointer",
+          "sensitive" : false
+        },
+        "Role" : {
+          "displayName" : "Role",
+          "dynamic" : false,
+          "identifiesControllerService" : false,
+          "name" : "Role",
+          "sensitive" : false
+        },
+        "Authentication Strategy" : {
+          "displayName" : "Authentication Strategy",
+          "dynamic" : false,
+          "identifiesControllerService" : false,
+          "name" : "Authentication Strategy",
+          "sensitive" : false
+        },
+        "Offset Token End Expression" : {
+          "displayName" : "Offset Token End Expression",
+          "dynamic" : false,
+          "identifiesControllerService" : false,
+          "name" : "Offset Token End Expression",
+          "sensitive" : false
+        },
+        "Database" : {
+          "displayName" : "Database",
+          "dynamic" : false,
+          "identifiesControllerService" : false,
+          "name" : "Database",
+          "sensitive" : false
+        },
+        "File Fragment Count" : {
+          "displayName" : "File Fragment Count",
+          "dynamic" : false,
+          "identifiesControllerService" : false,
+          "name" : "File Fragment Count",
+          "sensitive" : false
+        },
+        "Channel Insert Timeout" : {
+          "displayName" : "Channel Insert Timeout",
+          "dynamic" : false,
+          "identifiesControllerService" : false,
+          "name" : "Channel Insert Timeout",
+          "sensitive" : false
+        },
+        "Destination Type" : {
+          "displayName" : "Destination Type",
+          "dynamic" : false,
+          "identifiesControllerService" : false,
+          "name" : "Destination Type",
+          "sensitive" : false
+        },
+        "Web Client Service Provider" : {
+          "displayName" : "Web Client Service Provider",
+          "dynamic" : false,
+          "identifiesControllerService" : true,
+          "name" : "Web Client Service Provider",
+          "sensitive" : false
+        }
+      },
+      "retriedRelationships" : [ ],
+      "retryCount" : 10,
+      "runDurationMillis" : 0,
+      "scheduledState" : "ENABLED",
+      "schedulingPeriod" : "0 sec",
+      "schedulingStrategy" : "TIMER_DRIVEN",
+      "style" : { },
+      "type" : "com.snowflake.openflow.runtime.processors.snowpipe.streaming.PublishSnowpipeStreaming",
+      "yieldDuration" : "1 sec"
     } ],
     "remoteProcessGroups" : [ ],
     "scheduledState" : "ENABLED",
@@ -1243,6 +1033,6 @@
   "snapshotMetadata" : {
     "author" : "JLEONG",
     "flowIdentifier" : "Battery-MQTT-Telemetry",
-    "timestamp" : 1776966164436
+    "timestamp" : 1776972208211
   }
 }
