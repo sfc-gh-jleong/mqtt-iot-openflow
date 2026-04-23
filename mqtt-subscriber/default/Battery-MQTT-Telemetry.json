@@ -386,14 +386,14 @@
           "group" : "org.apache.nifi",
           "version" : "2026.4.16.16"
         },
-        "type" : "org.apache.nifi.ssl.SSLContextService"
+        "type" : "org.apache.nifi.ssl.SSLContextProvider"
       }, {
         "bundle" : {
           "artifact" : "nifi-standard-services-api-nar",
           "group" : "org.apache.nifi",
           "version" : "2026.4.16.16"
         },
-        "type" : "org.apache.nifi.ssl.SSLContextProvider"
+        "type" : "org.apache.nifi.ssl.SSLContextService"
       } ],
       "groupIdentifier" : "flow-contents-group",
       "identifier" : "f3ae55b5-43c7-3e2a-8e93-457396c49506",
@@ -851,16 +851,16 @@
         "Transfer Strategy" : "FILE_FRAGMENTS",
         "File Fragment Size" : "64 MB",
         "Offset Tracking Timeout" : "90 s",
-        "Channel Group" : "BATTERY-FF",
+        "Channel Group" : "BATTERY-STREAM",
         "Schema" : "MQTT",
-        "Pipe" : "MQTT_INGEST_PIPE",
+        "Pipe" : "MQTT_STREAMING_PIPE",
         "Offset Tracking Resolution" : "DISABLED",
         "Role" : "SYSADMIN",
         "Authentication Strategy" : "SNOWFLAKE_MANAGED",
         "Database" : "SNOWFLAKE_DEMO",
         "File Fragment Count" : "4",
         "Channel Insert Timeout" : "30 s",
-        "Destination Type" : "TABLE",
+        "Destination Type" : "PIPE",
         "Web Client Service Provider" : "7a8d644a-3bc3-3118-a157-75a73e54b50f"
       },
       "propertyDescriptors" : {
@@ -1033,6 +1033,6 @@
   "snapshotMetadata" : {
     "author" : "JLEONG",
     "flowIdentifier" : "Battery-MQTT-Telemetry",
-    "timestamp" : 1776974329350
+    "timestamp" : 1776978077274
   }
 }
