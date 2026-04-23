@@ -96,7 +96,107 @@
       },
       "zIndex" : 0
     } ],
-    "controllerServices" : [ ],
+    "controllerServices" : [ {
+      "bulletinLevel" : "WARN",
+      "bundle" : {
+        "artifact" : "nifi-ssl-context-service-nar",
+        "group" : "org.apache.nifi",
+        "version" : "2026.4.16.18"
+      },
+      "comments" : "",
+      "componentType" : "CONTROLLER_SERVICE",
+      "controllerServiceApis" : [ {
+        "bundle" : {
+          "artifact" : "nifi-standard-services-api-nar",
+          "group" : "org.apache.nifi",
+          "version" : "2026.4.16.16"
+        },
+        "type" : "org.apache.nifi.ssl.SSLContextService"
+      }, {
+        "bundle" : {
+          "artifact" : "nifi-standard-services-api-nar",
+          "group" : "org.apache.nifi",
+          "version" : "2026.4.16.16"
+        },
+        "type" : "org.apache.nifi.ssl.SSLContextProvider"
+      } ],
+      "groupIdentifier" : "flow-contents-group",
+      "identifier" : "f40e0ab7-6f40-3ce1-948b-e599db68cbcb",
+      "name" : "HiveMQ SSL Service",
+      "properties" : {
+        "Truststore Type" : "JKS",
+        "Truststore Filename" : "${java.home}/lib/security/cacerts",
+        "TLS Protocol" : "TLSv1.2"
+      },
+      "propertyDescriptors" : {
+        "Truststore Type" : {
+          "displayName" : "Truststore Type",
+          "dynamic" : false,
+          "identifiesControllerService" : false,
+          "name" : "Truststore Type",
+          "sensitive" : false
+        },
+        "Key Password" : {
+          "displayName" : "Key Password",
+          "dynamic" : false,
+          "identifiesControllerService" : false,
+          "name" : "Key Password",
+          "sensitive" : true
+        },
+        "Keystore Type" : {
+          "displayName" : "Keystore Type",
+          "dynamic" : false,
+          "identifiesControllerService" : false,
+          "name" : "Keystore Type",
+          "sensitive" : false
+        },
+        "Truststore Filename" : {
+          "displayName" : "Truststore Filename",
+          "dynamic" : false,
+          "identifiesControllerService" : false,
+          "name" : "Truststore Filename",
+          "resourceDefinition" : {
+            "cardinality" : "SINGLE",
+            "resourceTypes" : [ "FILE" ]
+          },
+          "sensitive" : false
+        },
+        "Keystore Password" : {
+          "displayName" : "Keystore Password",
+          "dynamic" : false,
+          "identifiesControllerService" : false,
+          "name" : "Keystore Password",
+          "sensitive" : true
+        },
+        "Truststore Password" : {
+          "displayName" : "Truststore Password",
+          "dynamic" : false,
+          "identifiesControllerService" : false,
+          "name" : "Truststore Password",
+          "sensitive" : true
+        },
+        "TLS Protocol" : {
+          "displayName" : "TLS Protocol",
+          "dynamic" : false,
+          "identifiesControllerService" : false,
+          "name" : "TLS Protocol",
+          "sensitive" : false
+        },
+        "Keystore Filename" : {
+          "displayName" : "Keystore Filename",
+          "dynamic" : false,
+          "identifiesControllerService" : false,
+          "name" : "Keystore Filename",
+          "resourceDefinition" : {
+            "cardinality" : "SINGLE",
+            "resourceTypes" : [ "FILE" ]
+          },
+          "sensitive" : false
+        }
+      },
+      "scheduledState" : "DISABLED",
+      "type" : "org.apache.nifi.ssl.StandardSSLContextService"
+    } ],
     "defaultBackPressureDataSizeThreshold" : "1 GB",
     "defaultBackPressureObjectThreshold" : 10000,
     "defaultFlowFileExpiration" : "0 sec",
@@ -147,17 +247,19 @@
         "y" : 800.0
       },
       "properties" : {
+        "Client ID" : "openflow-mqtt-publisher",
         "Keep Alive" : "60",
         "Last Will QoS Level" : "0",
         "Session State" : "true",
         "Quality of Service" : "0",
-        "Broker URI" : "tcp://PLACEHOLDER_BROKER:1883",
+        "Broker URI" : "ssl://9e99fefb67d84dd1a8c70654e2a78572.s1.eu.hivemq.cloud:8883",
         "Connection Timeout" : "30",
-        "Username" : "JLEONG",
+        "SSL Context Service" : "f40e0ab7-6f40-3ce1-948b-e599db68cbcb",
+        "Username" : "jleong",
         "Session Expiry Interval" : "24 hrs",
         "Last Will Topic" : "battery/lastwill",
         "Topic" : "${mqtt.topic}",
-        "MQTT Specification Version" : "0",
+        "MQTT Specification Version" : "4",
         "Retain Message" : "false",
         "Last Will Retain" : "false"
       },
@@ -487,6 +589,6 @@
   "snapshotMetadata" : {
     "author" : "JLEONG",
     "flowIdentifier" : "MQTT-Publisher",
-    "timestamp" : 1776968096597
+    "timestamp" : 1776968337509
   }
 }
