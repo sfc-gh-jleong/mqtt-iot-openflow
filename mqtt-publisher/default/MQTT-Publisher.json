@@ -225,7 +225,7 @@
     },
     "processGroups" : [ ],
     "processors" : [ {
-      "autoTerminatedRelationships" : [ ],
+      "autoTerminatedRelationships" : [ "success" ],
       "backoffMechanism" : "PENALIZE_FLOWFILE",
       "bulletinLevel" : "WARN",
       "bundle" : {
@@ -589,6 +589,6 @@
   "snapshotMetadata" : {
     "author" : "JLEONG",
     "flowIdentifier" : "MQTT-Publisher",
-    "timestamp" : 1776968463236
+    "timestamp" : 1776968553554
   }
 }
