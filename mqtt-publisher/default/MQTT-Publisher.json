@@ -252,7 +252,7 @@
         "Last Will QoS Level" : "0",
         "Session State" : "true",
         "Quality of Service" : "0",
-        "Broker URI" : "ssl://9e99fefb67d84dd1a8c70654e2a78572.s1.eu.hivemq.cloud:8883",
+        "Broker URI" : "ssl://1a720034763944d0a28a49866a22cb78.s1.eu.hivemq.cloud:8883",
         "Connection Timeout" : "30",
         "SSL Context Service" : "f40e0ab7-6f40-3ce1-948b-e599db68cbcb",
         "Username" : "jleong",
@@ -589,6 +589,6 @@
   "snapshotMetadata" : {
     "author" : "JLEONG",
     "flowIdentifier" : "MQTT-Publisher",
-    "timestamp" : 1776968337509
+    "timestamp" : 1776968463236
   }
 }
