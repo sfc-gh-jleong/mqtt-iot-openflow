@@ -440,7 +440,7 @@
         "File Size" : "0B",
         "Batch Size" : "1",
         "Unique FlowFiles" : "false",
-        "Custom Text" : "{\"device_id\": \"device-001\", \"timestamp\": \"${now()}\", \"value\": \"${random():mod(100):plus(1)}\"}",
+        "Custom Text" : "{\"BATTERY_ID\":\"BAT-00${random():mod(5):plus(1)}\",\"DEVICE_ID\":\"DEVICE-0${random():mod(3):plus(1)}\",\"TIMESTAMP_MS\":\"${now()}\",\"VOLTAGE_MV\":\"${random():mod(1700):plus(2500)}\",\"CURRENT_MA\":\"${random():mod(5000)}\",\"TEMPERATURE_C\":\"${random():mod(30):plus(15)}\",\"STATE_OF_CHARGE_PCT\":\"${random():mod(101)}\",\"STATE_OF_HEALTH_PCT\":\"${random():mod(21):plus(80)}\",\"CYCLE_COUNT\":\"${random():mod(500)}\",\"CAPACITY_REMAINING_MAH\":\"${random():mod(2500):plus(2500)}\",\"IS_CHARGING\":\"${random():mod(2):equals('0')}\",\"ERROR_CODE\":\"NONE\"}",
         "Character Set" : "UTF-8",
         "Data Format" : "Text"
       },
@@ -589,6 +589,6 @@
   "snapshotMetadata" : {
     "author" : "JLEONG",
     "flowIdentifier" : "MQTT-Publisher",
-    "timestamp" : 1776968553554
+    "timestamp" : 1776974211187
   }
 }
