@@ -1,0 +1,11 @@
+{
+  "flow" : {
+    "createdTimestamp" : 1776967736135,
+    "description" : "Flow: MQTT Publisher",
+    "identifier" : "MQTT-Publisher",
+    "lastModifiedTimestamp" : 1776967736135,
+    "name" : "MQTT Publisher",
+    "versionCount" : 0
+  },
+  "latest" : false
+}
