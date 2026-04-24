@@ -627,8 +627,8 @@
       "groupIdentifier" : "flow-contents-group",
       "identifier" : "815672ed-8c53-3bc1-90fe-82864c41406e",
       "position" : {
-        "x" : -24.0,
-        "y" : 168.0
+        "x" : -32.0,
+        "y" : 40.0
       }
     } ],
     "identifier" : "flow-contents-group",
@@ -662,15 +662,15 @@
       "penaltyDuration" : "30 sec",
       "position" : {
         "x" : -176.0,
-        "y" : -72.0
+        "y" : -296.0
       },
       "properties" : {
         "Transfer Strategy" : "MANAGED",
         "File Fragment Size" : "64 MB",
         "Offset Tracking Timeout" : "90 s",
         "Channel Group" : "SHARED",
-        "Schema" : "MQTT_CLONE",
-        "Pipe" : "MQTT_STREAMING_PIPE",
+        "Schema" : "MQTT_OEE",
+        "Pipe" : "OEE_STREAMING_PIPE",
         "Offset Tracking Resolution" : "DISABLED",
         "Authentication Strategy" : "SNOWFLAKE_MANAGED",
         "Database" : "SNOWFLAKE_DEMO",
@@ -871,8 +871,8 @@
         "SSL Context Service" : "f3ae55b5-43c7-3e2a-8e93-457396c49506",
         "Username" : "jleong",
         "Session Expiry Interval" : "24 hrs",
-        "Last Will Topic" : "openflow/status",
-        "Topic Filter" : "battery/telemetry/#",
+        "Last Will Topic" : "factory/lastwill",
+        "Topic Filter" : "factory/oee/#",
         "MQTT Specification Version" : "4",
         "Add Attributes as Fields" : "false",
         "Last Will Retain" : "false"
@@ -1054,6 +1054,6 @@
   "snapshotMetadata" : {
     "author" : "JLEONG",
     "flowIdentifier" : "Battery-MQTT-Telemetry",
-    "timestamp" : 1777051503872
+    "timestamp" : 1777054636375
   }
 }
