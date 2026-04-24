@@ -25,47 +25,19 @@
       },
       "flowFileExpiration" : "0 sec",
       "groupIdentifier" : "flow-contents-group",
-      "identifier" : "67e2a737-9299-3a92-8e41-12f62e2cacc6",
-      "labelIndex" : 1,
-      "loadBalanceCompression" : "DO_NOT_COMPRESS",
-      "loadBalanceStrategy" : "DO_NOT_LOAD_BALANCE",
-      "prioritizers" : [ ],
-      "selectedRelationships" : [ "failure" ],
-      "source" : {
-        "comments" : "",
-        "groupId" : "flow-contents-group",
-        "id" : "a67d172b-a4d8-3229-9ef2-019673481042",
-        "name" : "PublishSnowpipeStreaming - Telemetry",
-        "type" : "PROCESSOR"
-      },
-      "zIndex" : 0
-    }, {
-      "backPressureDataSizeThreshold" : "1 GB",
-      "backPressureObjectThreshold" : 10000,
-      "bends" : [ ],
-      "componentType" : "CONNECTION",
-      "destination" : {
-        "comments" : "",
-        "groupId" : "flow-contents-group",
-        "id" : "a67d172b-a4d8-3229-9ef2-019673481042",
-        "name" : "PublishSnowpipeStreaming - Telemetry",
-        "type" : "PROCESSOR"
-      },
-      "flowFileExpiration" : "0 sec",
-      "groupIdentifier" : "flow-contents-group",
-      "identifier" : "a4039b77-7045-3c00-bc99-8f83a8369ef1",
+      "identifier" : "08bb734f-5d8f-38fb-9fa1-98659867901b",
       "labelIndex" : 0,
       "loadBalanceCompression" : "DO_NOT_COMPRESS",
       "loadBalanceStrategy" : "DO_NOT_LOAD_BALANCE",
       "name" : "",
       "partitioningAttribute" : "",
       "prioritizers" : [ ],
-      "selectedRelationships" : [ "success" ],
+      "selectedRelationships" : [ "failure" ],
       "source" : {
         "comments" : "",
         "groupId" : "flow-contents-group",
-        "id" : "f1534cc2-5a5a-3847-be62-66284c9bd720",
-        "name" : "JoltTransformRecord",
+        "id" : "5f93d5eb-145a-31dc-aa48-74117efd9466",
+        "name" : "PublishSnowpipeStreaming",
         "type" : "PROCESSOR"
       },
       "zIndex" : 2
@@ -77,18 +49,16 @@
       "destination" : {
         "comments" : "",
         "groupId" : "flow-contents-group",
-        "id" : "f1534cc2-5a5a-3847-be62-66284c9bd720",
-        "name" : "JoltTransformRecord",
+        "id" : "5f93d5eb-145a-31dc-aa48-74117efd9466",
+        "name" : "PublishSnowpipeStreaming",
         "type" : "PROCESSOR"
       },
       "flowFileExpiration" : "0 sec",
       "groupIdentifier" : "flow-contents-group",
-      "identifier" : "fb9f2958-7de5-32c0-ba40-db7797219979",
-      "labelIndex" : 0,
+      "identifier" : "687468aa-8797-3cc7-a02c-2a5c591fd0cc",
+      "labelIndex" : 1,
       "loadBalanceCompression" : "DO_NOT_COMPRESS",
       "loadBalanceStrategy" : "DO_NOT_LOAD_BALANCE",
-      "name" : "",
-      "partitioningAttribute" : "",
       "prioritizers" : [ ],
       "selectedRelationships" : [ "Message" ],
       "source" : {
@@ -98,7 +68,7 @@
         "name" : "ConsumeMQTT - HiveMQ",
         "type" : "PROCESSOR"
       },
-      "zIndex" : 1
+      "zIndex" : 0
     } ],
     "controllerServices" : [ {
       "bulletinLevel" : "WARN",
@@ -657,8 +627,8 @@
       "groupIdentifier" : "flow-contents-group",
       "identifier" : "815672ed-8c53-3bc1-90fe-82864c41406e",
       "position" : {
-        "x" : -456.0,
-        "y" : 240.0
+        "x" : -24.0,
+        "y" : 168.0
       }
     } ],
     "identifier" : "flow-contents-group",
@@ -673,6 +643,201 @@
     },
     "processGroups" : [ ],
     "processors" : [ {
+      "autoTerminatedRelationships" : [ "empty", "invalid", "success" ],
+      "backoffMechanism" : "PENALIZE_FLOWFILE",
+      "bulletinLevel" : "WARN",
+      "bundle" : {
+        "artifact" : "runtime-snowpipe-streaming-2-processors-nar",
+        "group" : "com.snowflake.openflow.runtime",
+        "version" : "2026.4.16.18"
+      },
+      "comments" : "",
+      "componentType" : "PROCESSOR",
+      "concurrentlySchedulableTaskCount" : 1,
+      "executionNode" : "ALL",
+      "groupIdentifier" : "flow-contents-group",
+      "identifier" : "5f93d5eb-145a-31dc-aa48-74117efd9466",
+      "maxBackoffPeriod" : "10 mins",
+      "name" : "PublishSnowpipeStreaming",
+      "penaltyDuration" : "30 sec",
+      "position" : {
+        "x" : -176.0,
+        "y" : -72.0
+      },
+      "properties" : {
+        "Transfer Strategy" : "MANAGED",
+        "File Fragment Size" : "64 MB",
+        "Offset Tracking Timeout" : "90 s",
+        "Channel Group" : "SHARED",
+        "Schema" : "MQTT_CLONE",
+        "Pipe" : "MQTT_STREAMING_PIPE",
+        "Offset Tracking Resolution" : "DISABLED",
+        "Authentication Strategy" : "SNOWFLAKE_MANAGED",
+        "Database" : "SNOWFLAKE_DEMO",
+        "File Fragment Count" : "4",
+        "Channel Insert Timeout" : "30 s",
+        "Destination Type" : "PIPE",
+        "Web Client Service Provider" : "7a8d644a-3bc3-3118-a157-75a73e54b50f"
+      },
+      "propertyDescriptors" : {
+        "Account" : {
+          "displayName" : "Account",
+          "dynamic" : false,
+          "identifiesControllerService" : false,
+          "name" : "Account",
+          "sensitive" : false
+        },
+        "Offset Token Start Expression" : {
+          "displayName" : "Offset Token Start Expression",
+          "dynamic" : false,
+          "identifiesControllerService" : false,
+          "name" : "Offset Token Start Expression",
+          "sensitive" : false
+        },
+        "User" : {
+          "displayName" : "User",
+          "dynamic" : false,
+          "identifiesControllerService" : false,
+          "name" : "User",
+          "sensitive" : false
+        },
+        "Table" : {
+          "displayName" : "Table",
+          "dynamic" : false,
+          "identifiesControllerService" : false,
+          "name" : "Table",
+          "sensitive" : false
+        },
+        "Transfer Strategy" : {
+          "displayName" : "Transfer Strategy",
+          "dynamic" : false,
+          "identifiesControllerService" : false,
+          "name" : "Transfer Strategy",
+          "sensitive" : false
+        },
+        "File Fragment Size" : {
+          "displayName" : "File Fragment Size",
+          "dynamic" : false,
+          "identifiesControllerService" : false,
+          "name" : "File Fragment Size",
+          "sensitive" : false
+        },
+        "Offset Tracking Timeout" : {
+          "displayName" : "Offset Tracking Timeout",
+          "dynamic" : false,
+          "identifiesControllerService" : false,
+          "name" : "Offset Tracking Timeout",
+          "sensitive" : false
+        },
+        "Channel Group" : {
+          "displayName" : "Channel Group",
+          "dynamic" : false,
+          "identifiesControllerService" : false,
+          "name" : "Channel Group",
+          "sensitive" : false
+        },
+        "Schema" : {
+          "displayName" : "Schema",
+          "dynamic" : false,
+          "identifiesControllerService" : false,
+          "name" : "Schema",
+          "sensitive" : false
+        },
+        "Pipe" : {
+          "displayName" : "Pipe",
+          "dynamic" : false,
+          "identifiesControllerService" : false,
+          "name" : "Pipe",
+          "sensitive" : false
+        },
+        "Offset Tracking Resolution" : {
+          "displayName" : "Offset Tracking Resolution",
+          "dynamic" : false,
+          "identifiesControllerService" : false,
+          "name" : "Offset Tracking Resolution",
+          "sensitive" : false
+        },
+        "Private Key Service" : {
+          "displayName" : "Private Key Service",
+          "dynamic" : false,
+          "identifiesControllerService" : true,
+          "name" : "Private Key Service",
+          "sensitive" : false
+        },
+        "Offset Token Record Pointer" : {
+          "displayName" : "Offset Token Record Pointer",
+          "dynamic" : false,
+          "identifiesControllerService" : false,
+          "name" : "Offset Token Record Pointer",
+          "sensitive" : false
+        },
+        "Role" : {
+          "displayName" : "Role",
+          "dynamic" : false,
+          "identifiesControllerService" : false,
+          "name" : "Role",
+          "sensitive" : false
+        },
+        "Authentication Strategy" : {
+          "displayName" : "Authentication Strategy",
+          "dynamic" : false,
+          "identifiesControllerService" : false,
+          "name" : "Authentication Strategy",
+          "sensitive" : false
+        },
+        "Offset Token End Expression" : {
+          "displayName" : "Offset Token End Expression",
+          "dynamic" : false,
+          "identifiesControllerService" : false,
+          "name" : "Offset Token End Expression",
+          "sensitive" : false
+        },
+        "Database" : {
+          "displayName" : "Database",
+          "dynamic" : false,
+          "identifiesControllerService" : false,
+          "name" : "Database",
+          "sensitive" : false
+        },
+        "File Fragment Count" : {
+          "displayName" : "File Fragment Count",
+          "dynamic" : false,
+          "identifiesControllerService" : false,
+          "name" : "File Fragment Count",
+          "sensitive" : false
+        },
+        "Channel Insert Timeout" : {
+          "displayName" : "Channel Insert Timeout",
+          "dynamic" : false,
+          "identifiesControllerService" : false,
+          "name" : "Channel Insert Timeout",
+          "sensitive" : false
+        },
+        "Destination Type" : {
+          "displayName" : "Destination Type",
+          "dynamic" : false,
+          "identifiesControllerService" : false,
+          "name" : "Destination Type",
+          "sensitive" : false
+        },
+        "Web Client Service Provider" : {
+          "displayName" : "Web Client Service Provider",
+          "dynamic" : false,
+          "identifiesControllerService" : true,
+          "name" : "Web Client Service Provider",
+          "sensitive" : false
+        }
+      },
+      "retriedRelationships" : [ ],
+      "retryCount" : 10,
+      "runDurationMillis" : 0,
+      "scheduledState" : "ENABLED",
+      "schedulingPeriod" : "0 sec",
+      "schedulingStrategy" : "TIMER_DRIVEN",
+      "style" : { },
+      "type" : "com.snowflake.openflow.runtime.processors.snowpipe.streaming.PublishSnowpipeStreaming",
+      "yieldDuration" : "1 sec"
+    }, {
       "autoTerminatedRelationships" : [ "parse.failure" ],
       "backoffMechanism" : "PENALIZE_FLOWFILE",
       "bulletinLevel" : "WARN",
@@ -877,300 +1042,6 @@
       "style" : { },
       "type" : "org.apache.nifi.processors.mqtt.ConsumeMQTT",
       "yieldDuration" : "1 sec"
-    }, {
-      "autoTerminatedRelationships" : [ "empty", "invalid", "success" ],
-      "backoffMechanism" : "PENALIZE_FLOWFILE",
-      "bulletinLevel" : "WARN",
-      "bundle" : {
-        "artifact" : "runtime-snowpipe-streaming-2-processors-nar",
-        "group" : "com.snowflake.openflow.runtime",
-        "version" : "2026.4.16.18"
-      },
-      "comments" : "",
-      "componentType" : "PROCESSOR",
-      "concurrentlySchedulableTaskCount" : 1,
-      "executionNode" : "ALL",
-      "groupIdentifier" : "flow-contents-group",
-      "identifier" : "a67d172b-a4d8-3229-9ef2-019673481042",
-      "maxBackoffPeriod" : "10 mins",
-      "name" : "PublishSnowpipeStreaming - Telemetry",
-      "penaltyDuration" : "30 sec",
-      "position" : {
-        "x" : -176.0,
-        "y" : -24.0
-      },
-      "properties" : {
-        "Table" : "MQTT_TELEMETRY",
-        "Transfer Strategy" : "FILE_FRAGMENTS",
-        "File Fragment Size" : "64 MB",
-        "Offset Tracking Timeout" : "90 s",
-        "Channel Group" : "BATT-47858",
-        "Schema" : "MQTT",
-        "Pipe" : "MQTT_TELEMETRY-STREAMING",
-        "Offset Tracking Resolution" : "DISABLED",
-        "Role" : "SYSADMIN",
-        "Authentication Strategy" : "SNOWFLAKE_MANAGED",
-        "Database" : "SNOWFLAKE_DEMO",
-        "File Fragment Count" : "4",
-        "Channel Insert Timeout" : "30 s",
-        "Destination Type" : "TABLE",
-        "Web Client Service Provider" : "7a8d644a-3bc3-3118-a157-75a73e54b50f"
-      },
-      "propertyDescriptors" : {
-        "Account" : {
-          "displayName" : "Account",
-          "dynamic" : false,
-          "identifiesControllerService" : false,
-          "name" : "Account",
-          "sensitive" : false
-        },
-        "Offset Token Start Expression" : {
-          "displayName" : "Offset Token Start Expression",
-          "dynamic" : false,
-          "identifiesControllerService" : false,
-          "name" : "Offset Token Start Expression",
-          "sensitive" : false
-        },
-        "User" : {
-          "displayName" : "User",
-          "dynamic" : false,
-          "identifiesControllerService" : false,
-          "name" : "User",
-          "sensitive" : false
-        },
-        "Table" : {
-          "displayName" : "Table",
-          "dynamic" : false,
-          "identifiesControllerService" : false,
-          "name" : "Table",
-          "sensitive" : false
-        },
-        "Transfer Strategy" : {
-          "displayName" : "Transfer Strategy",
-          "dynamic" : false,
-          "identifiesControllerService" : false,
-          "name" : "Transfer Strategy",
-          "sensitive" : false
-        },
-        "File Fragment Size" : {
-          "displayName" : "File Fragment Size",
-          "dynamic" : false,
-          "identifiesControllerService" : false,
-          "name" : "File Fragment Size",
-          "sensitive" : false
-        },
-        "Offset Tracking Timeout" : {
-          "displayName" : "Offset Tracking Timeout",
-          "dynamic" : false,
-          "identifiesControllerService" : false,
-          "name" : "Offset Tracking Timeout",
-          "sensitive" : false
-        },
-        "Channel Group" : {
-          "displayName" : "Channel Group",
-          "dynamic" : false,
-          "identifiesControllerService" : false,
-          "name" : "Channel Group",
-          "sensitive" : false
-        },
-        "Schema" : {
-          "displayName" : "Schema",
-          "dynamic" : false,
-          "identifiesControllerService" : false,
-          "name" : "Schema",
-          "sensitive" : false
-        },
-        "Pipe" : {
-          "displayName" : "Pipe",
-          "dynamic" : false,
-          "identifiesControllerService" : false,
-          "name" : "Pipe",
-          "sensitive" : false
-        },
-        "Offset Tracking Resolution" : {
-          "displayName" : "Offset Tracking Resolution",
-          "dynamic" : false,
-          "identifiesControllerService" : false,
-          "name" : "Offset Tracking Resolution",
-          "sensitive" : false
-        },
-        "Private Key Service" : {
-          "displayName" : "Private Key Service",
-          "dynamic" : false,
-          "identifiesControllerService" : true,
-          "name" : "Private Key Service",
-          "sensitive" : false
-        },
-        "Offset Token Record Pointer" : {
-          "displayName" : "Offset Token Record Pointer",
-          "dynamic" : false,
-          "identifiesControllerService" : false,
-          "name" : "Offset Token Record Pointer",
-          "sensitive" : false
-        },
-        "Role" : {
-          "displayName" : "Role",
-          "dynamic" : false,
-          "identifiesControllerService" : false,
-          "name" : "Role",
-          "sensitive" : false
-        },
-        "Authentication Strategy" : {
-          "displayName" : "Authentication Strategy",
-          "dynamic" : false,
-          "identifiesControllerService" : false,
-          "name" : "Authentication Strategy",
-          "sensitive" : false
-        },
-        "Offset Token End Expression" : {
-          "displayName" : "Offset Token End Expression",
-          "dynamic" : false,
-          "identifiesControllerService" : false,
-          "name" : "Offset Token End Expression",
-          "sensitive" : false
-        },
-        "Database" : {
-          "displayName" : "Database",
-          "dynamic" : false,
-          "identifiesControllerService" : false,
-          "name" : "Database",
-          "sensitive" : false
-        },
-        "File Fragment Count" : {
-          "displayName" : "File Fragment Count",
-          "dynamic" : false,
-          "identifiesControllerService" : false,
-          "name" : "File Fragment Count",
-          "sensitive" : false
-        },
-        "Channel Insert Timeout" : {
-          "displayName" : "Channel Insert Timeout",
-          "dynamic" : false,
-          "identifiesControllerService" : false,
-          "name" : "Channel Insert Timeout",
-          "sensitive" : false
-        },
-        "Destination Type" : {
-          "displayName" : "Destination Type",
-          "dynamic" : false,
-          "identifiesControllerService" : false,
-          "name" : "Destination Type",
-          "sensitive" : false
-        },
-        "Web Client Service Provider" : {
-          "displayName" : "Web Client Service Provider",
-          "dynamic" : false,
-          "identifiesControllerService" : true,
-          "name" : "Web Client Service Provider",
-          "sensitive" : false
-        }
-      },
-      "retriedRelationships" : [ ],
-      "retryCount" : 10,
-      "runDurationMillis" : 0,
-      "scheduledState" : "ENABLED",
-      "schedulingPeriod" : "0 sec",
-      "schedulingStrategy" : "TIMER_DRIVEN",
-      "style" : { },
-      "type" : "com.snowflake.openflow.runtime.processors.snowpipe.streaming.PublishSnowpipeStreaming",
-      "yieldDuration" : "1 sec"
-    }, {
-      "autoTerminatedRelationships" : [ "failure", "original" ],
-      "backoffMechanism" : "PENALIZE_FLOWFILE",
-      "bulletinLevel" : "WARN",
-      "bundle" : {
-        "artifact" : "nifi-jolt-nar",
-        "group" : "org.apache.nifi",
-        "version" : "2026.4.16.18"
-      },
-      "comments" : "",
-      "componentType" : "PROCESSOR",
-      "concurrentlySchedulableTaskCount" : 1,
-      "executionNode" : "ALL",
-      "groupIdentifier" : "flow-contents-group",
-      "identifier" : "f1534cc2-5a5a-3847-be62-66284c9bd720",
-      "maxBackoffPeriod" : "10 mins",
-      "name" : "JoltTransformRecord",
-      "penaltyDuration" : "30 sec",
-      "position" : {
-        "x" : -176.0,
-        "y" : -328.0
-      },
-      "properties" : {
-        "Jolt Transform" : "jolt-transform-chain",
-        "Transform Cache Size" : "1",
-        "Record Writer" : "9cbc8f44-5594-3346-837d-2b1c152c1a68",
-        "Record Reader" : "af36eb88-f2f1-3007-ba38-b4b8a217a820",
-        "Jolt Specification" : "[{\"operation\":\"shift\",\"spec\":{\"BATTERY_ID\":\"BATTERY_ID\",\"DEVICE_ID\":\"DEVICE_ID\",\"TIMESTAMP_MS\":\"TIMESTAMP_MS\",\"VOLTAGE_MV\":\"VOLTAGE_MV\",\"CURRENT_MA\":\"CURRENT_MA\",\"TEMPERATURE_C\":\"TEMPERATURE_C\",\"STATE_OF_CHARGE_PCT\":\"STATE_OF_CHARGE_PCT\",\"STATE_OF_HEALTH_PCT\":\"STATE_OF_HEALTH_PCT\",\"CYCLE_COUNT\":\"CYCLE_COUNT\",\"CAPACITY_REMAINING_MAH\":\"CAPACITY_REMAINING_MAH\",\"IS_CHARGING\":\"IS_CHARGING\",\"ERROR_CODE\":\"ERROR_CODE\"}}]"
-      },
-      "propertyDescriptors" : {
-        "Jolt Transform" : {
-          "displayName" : "Jolt Transform",
-          "dynamic" : false,
-          "identifiesControllerService" : false,
-          "name" : "Jolt Transform",
-          "sensitive" : false
-        },
-        "Transform Cache Size" : {
-          "displayName" : "Transform Cache Size",
-          "dynamic" : false,
-          "identifiesControllerService" : false,
-          "name" : "Transform Cache Size",
-          "sensitive" : false
-        },
-        "Record Writer" : {
-          "displayName" : "Record Writer",
-          "dynamic" : false,
-          "identifiesControllerService" : true,
-          "name" : "Record Writer",
-          "sensitive" : false
-        },
-        "Custom Transformation Class Name" : {
-          "displayName" : "Custom Transformation Class Name",
-          "dynamic" : false,
-          "identifiesControllerService" : false,
-          "name" : "Custom Transformation Class Name",
-          "sensitive" : false
-        },
-        "Custom Module Directory" : {
-          "displayName" : "Custom Module Directory",
-          "dynamic" : false,
-          "identifiesControllerService" : false,
-          "name" : "Custom Module Directory",
-          "resourceDefinition" : {
-            "cardinality" : "MULTIPLE",
-            "resourceTypes" : [ "DIRECTORY", "FILE" ]
-          },
-          "sensitive" : false
-        },
-        "Record Reader" : {
-          "displayName" : "Record Reader",
-          "dynamic" : false,
-          "identifiesControllerService" : true,
-          "name" : "Record Reader",
-          "sensitive" : false
-        },
-        "Jolt Specification" : {
-          "displayName" : "Jolt Specification",
-          "dynamic" : false,
-          "identifiesControllerService" : false,
-          "name" : "Jolt Specification",
-          "resourceDefinition" : {
-            "cardinality" : "SINGLE",
-            "resourceTypes" : [ "FILE", "TEXT" ]
-          },
-          "sensitive" : false
-        }
-      },
-      "retriedRelationships" : [ ],
-      "retryCount" : 10,
-      "runDurationMillis" : 0,
-      "scheduledState" : "ENABLED",
-      "schedulingPeriod" : "0 sec",
-      "schedulingStrategy" : "TIMER_DRIVEN",
-      "style" : { },
-      "type" : "org.apache.nifi.processors.jolt.JoltTransformRecord",
-      "yieldDuration" : "1 sec"
     } ],
     "remoteProcessGroups" : [ ],
     "scheduledState" : "ENABLED",
@@ -1183,6 +1054,6 @@
   "snapshotMetadata" : {
     "author" : "JLEONG",
     "flowIdentifier" : "Battery-MQTT-Telemetry",
-    "timestamp" : 1777048107721
+    "timestamp" : 1777051503872
   }
 }
