@@ -19,34 +19,6 @@
       "destination" : {
         "comments" : "",
         "groupId" : "flow-contents-group",
-        "id" : "a67d172b-a4d8-3229-9ef2-019673481042",
-        "name" : "PublishSnowpipeStreaming - Telemetry",
-        "type" : "PROCESSOR"
-      },
-      "flowFileExpiration" : "0 sec",
-      "groupIdentifier" : "flow-contents-group",
-      "identifier" : "131f7fd5-0294-302e-a7e3-161aa50cf24e",
-      "labelIndex" : 1,
-      "loadBalanceCompression" : "DO_NOT_COMPRESS",
-      "loadBalanceStrategy" : "DO_NOT_LOAD_BALANCE",
-      "prioritizers" : [ ],
-      "selectedRelationships" : [ "success" ],
-      "source" : {
-        "comments" : "",
-        "groupId" : "flow-contents-group",
-        "id" : "6140c8fa-5aa7-331a-8972-71010cafb924",
-        "name" : "Flatten Payload",
-        "type" : "PROCESSOR"
-      },
-      "zIndex" : 0
-    }, {
-      "backPressureDataSizeThreshold" : "1 GB",
-      "backPressureObjectThreshold" : 10000,
-      "bends" : [ ],
-      "componentType" : "CONNECTION",
-      "destination" : {
-        "comments" : "",
-        "groupId" : "flow-contents-group",
         "id" : "815672ed-8c53-3bc1-90fe-82864c41406e",
         "name" : "Funnel",
         "type" : "FUNNEL"
@@ -75,16 +47,48 @@
       "destination" : {
         "comments" : "",
         "groupId" : "flow-contents-group",
-        "id" : "6140c8fa-5aa7-331a-8972-71010cafb924",
-        "name" : "Flatten Payload",
+        "id" : "a67d172b-a4d8-3229-9ef2-019673481042",
+        "name" : "PublishSnowpipeStreaming - Telemetry",
         "type" : "PROCESSOR"
       },
       "flowFileExpiration" : "0 sec",
       "groupIdentifier" : "flow-contents-group",
-      "identifier" : "8ab7aac6-b290-37b6-b5d6-7c4343053357",
-      "labelIndex" : 1,
+      "identifier" : "a4039b77-7045-3c00-bc99-8f83a8369ef1",
+      "labelIndex" : 0,
       "loadBalanceCompression" : "DO_NOT_COMPRESS",
       "loadBalanceStrategy" : "DO_NOT_LOAD_BALANCE",
+      "name" : "",
+      "partitioningAttribute" : "",
+      "prioritizers" : [ ],
+      "selectedRelationships" : [ "success" ],
+      "source" : {
+        "comments" : "",
+        "groupId" : "flow-contents-group",
+        "id" : "f1534cc2-5a5a-3847-be62-66284c9bd720",
+        "name" : "JoltTransformRecord",
+        "type" : "PROCESSOR"
+      },
+      "zIndex" : 2
+    }, {
+      "backPressureDataSizeThreshold" : "1 GB",
+      "backPressureObjectThreshold" : 10000,
+      "bends" : [ ],
+      "componentType" : "CONNECTION",
+      "destination" : {
+        "comments" : "",
+        "groupId" : "flow-contents-group",
+        "id" : "f1534cc2-5a5a-3847-be62-66284c9bd720",
+        "name" : "JoltTransformRecord",
+        "type" : "PROCESSOR"
+      },
+      "flowFileExpiration" : "0 sec",
+      "groupIdentifier" : "flow-contents-group",
+      "identifier" : "fb9f2958-7de5-32c0-ba40-db7797219979",
+      "labelIndex" : 0,
+      "loadBalanceCompression" : "DO_NOT_COMPRESS",
+      "loadBalanceStrategy" : "DO_NOT_LOAD_BALANCE",
+      "name" : "",
+      "partitioningAttribute" : "",
       "prioritizers" : [ ],
       "selectedRelationships" : [ "Message" ],
       "source" : {
@@ -94,7 +98,7 @@
         "name" : "ConsumeMQTT - HiveMQ",
         "type" : "PROCESSOR"
       },
-      "zIndex" : 0
+      "zIndex" : 1
     } ],
     "controllerServices" : [ {
       "bulletinLevel" : "WARN",
@@ -226,6 +230,175 @@
       },
       "scheduledState" : "DISABLED",
       "type" : "org.apache.nifi.web.client.provider.service.StandardWebClientServiceProvider"
+    }, {
+      "bulletinLevel" : "WARN",
+      "bundle" : {
+        "artifact" : "nifi-record-serialization-services-nar",
+        "group" : "org.apache.nifi",
+        "version" : "2026.4.16.18"
+      },
+      "comments" : "",
+      "componentType" : "CONTROLLER_SERVICE",
+      "controllerServiceApis" : [ {
+        "bundle" : {
+          "artifact" : "nifi-standard-services-api-nar",
+          "group" : "org.apache.nifi",
+          "version" : "2026.4.16.16"
+        },
+        "type" : "org.apache.nifi.serialization.RecordSetWriterFactory"
+      } ],
+      "groupIdentifier" : "flow-contents-group",
+      "identifier" : "9cbc8f44-5594-3346-837d-2b1c152c1a68",
+      "name" : "JsonRecordSetWriter",
+      "properties" : {
+        "Schema Text" : "${avro.schema}",
+        "Allow Scientific Notation" : "false",
+        "Compression Level" : "1",
+        "Output Grouping" : "output-oneline",
+        "Schema Access Strategy" : "inherit-record-schema",
+        "Schema Name" : "${schema.name}",
+        "Pretty Print JSON" : "false",
+        "Suppress Null Values" : "never-suppress",
+        "Schema Write Strategy" : "no-schema",
+        "Compression Format" : "none"
+      },
+      "propertyDescriptors" : {
+        "Schema Branch" : {
+          "displayName" : "Schema Branch",
+          "dynamic" : false,
+          "identifiesControllerService" : false,
+          "name" : "Schema Branch",
+          "sensitive" : false
+        },
+        "Schema Reference Reader" : {
+          "displayName" : "Schema Reference Reader",
+          "dynamic" : false,
+          "identifiesControllerService" : true,
+          "name" : "Schema Reference Reader",
+          "sensitive" : false
+        },
+        "Schema Text" : {
+          "displayName" : "Schema Text",
+          "dynamic" : false,
+          "identifiesControllerService" : false,
+          "name" : "Schema Text",
+          "sensitive" : false
+        },
+        "Allow Scientific Notation" : {
+          "displayName" : "Allow Scientific Notation",
+          "dynamic" : false,
+          "identifiesControllerService" : false,
+          "name" : "Allow Scientific Notation",
+          "sensitive" : false
+        },
+        "Compression Level" : {
+          "displayName" : "Compression Level",
+          "dynamic" : false,
+          "identifiesControllerService" : false,
+          "name" : "Compression Level",
+          "sensitive" : false
+        },
+        "Output Grouping" : {
+          "displayName" : "Output Grouping",
+          "dynamic" : false,
+          "identifiesControllerService" : false,
+          "name" : "Output Grouping",
+          "sensitive" : false
+        },
+        "Schema Registry" : {
+          "displayName" : "Schema Registry",
+          "dynamic" : false,
+          "identifiesControllerService" : true,
+          "name" : "Schema Registry",
+          "sensitive" : false
+        },
+        "Schema Access Strategy" : {
+          "displayName" : "Schema Access Strategy",
+          "dynamic" : false,
+          "identifiesControllerService" : false,
+          "name" : "Schema Access Strategy",
+          "sensitive" : false
+        },
+        "Schema Name" : {
+          "displayName" : "Schema Name",
+          "dynamic" : false,
+          "identifiesControllerService" : false,
+          "name" : "Schema Name",
+          "sensitive" : false
+        },
+        "Timestamp Format" : {
+          "displayName" : "Timestamp Format",
+          "dynamic" : false,
+          "identifiesControllerService" : false,
+          "name" : "Timestamp Format",
+          "sensitive" : false
+        },
+        "Date Format" : {
+          "displayName" : "Date Format",
+          "dynamic" : false,
+          "identifiesControllerService" : false,
+          "name" : "Date Format",
+          "sensitive" : false
+        },
+        "Pretty Print JSON" : {
+          "displayName" : "Pretty Print JSON",
+          "dynamic" : false,
+          "identifiesControllerService" : false,
+          "name" : "Pretty Print JSON",
+          "sensitive" : false
+        },
+        "Suppress Null Values" : {
+          "displayName" : "Suppress Null Values",
+          "dynamic" : false,
+          "identifiesControllerService" : false,
+          "name" : "Suppress Null Values",
+          "sensitive" : false
+        },
+        "Schema Write Strategy" : {
+          "displayName" : "Schema Write Strategy",
+          "dynamic" : false,
+          "identifiesControllerService" : false,
+          "name" : "Schema Write Strategy",
+          "sensitive" : false
+        },
+        "Compression Format" : {
+          "displayName" : "Compression Format",
+          "dynamic" : false,
+          "identifiesControllerService" : false,
+          "name" : "Compression Format",
+          "sensitive" : false
+        },
+        "Schema Cache" : {
+          "displayName" : "Schema Cache",
+          "dynamic" : false,
+          "identifiesControllerService" : true,
+          "name" : "Schema Cache",
+          "sensitive" : false
+        },
+        "Schema Version" : {
+          "displayName" : "Schema Version",
+          "dynamic" : false,
+          "identifiesControllerService" : false,
+          "name" : "Schema Version",
+          "sensitive" : false
+        },
+        "Time Format" : {
+          "displayName" : "Time Format",
+          "dynamic" : false,
+          "identifiesControllerService" : false,
+          "name" : "Time Format",
+          "sensitive" : false
+        },
+        "Schema Reference Writer" : {
+          "displayName" : "Schema Reference Writer",
+          "dynamic" : false,
+          "identifiesControllerService" : true,
+          "name" : "Schema Reference Writer",
+          "sensitive" : false
+        }
+      },
+      "scheduledState" : "DISABLED",
+      "type" : "org.apache.nifi.json.JsonRecordSetWriter"
     }, {
       "bulletinLevel" : "WARN",
       "bundle" : {
@@ -484,8 +657,8 @@
       "groupIdentifier" : "flow-contents-group",
       "identifier" : "815672ed-8c53-3bc1-90fe-82864c41406e",
       "position" : {
-        "x" : 0.0,
-        "y" : 288.0
+        "x" : -456.0,
+        "y" : 240.0
       }
     } ],
     "identifier" : "flow-contents-group",
@@ -500,127 +673,7 @@
     },
     "processGroups" : [ ],
     "processors" : [ {
-      "autoTerminatedRelationships" : [ "failure" ],
-      "backoffMechanism" : "PENALIZE_FLOWFILE",
-      "bulletinLevel" : "WARN",
-      "bundle" : {
-        "artifact" : "nifi-jolt-nar",
-        "group" : "org.apache.nifi",
-        "version" : "2026.4.16.18"
-      },
-      "comments" : "",
-      "componentType" : "PROCESSOR",
-      "concurrentlySchedulableTaskCount" : 1,
-      "executionNode" : "ALL",
-      "groupIdentifier" : "flow-contents-group",
-      "identifier" : "6140c8fa-5aa7-331a-8972-71010cafb924",
-      "maxBackoffPeriod" : "10 mins",
-      "name" : "Flatten Payload",
-      "penaltyDuration" : "30 sec",
-      "position" : {
-        "x" : -128.0,
-        "y" : -320.0
-      },
-      "properties" : {
-        "JSON Source" : "FLOW_FILE",
-        "Jolt Transform" : "jolt-transform-chain",
-        "Max String Length" : "20 MB",
-        "Transform Cache Size" : "1",
-        "Retain Unicode Escape Sequences" : "false",
-        "Pretty Print" : "false",
-        "Jolt Specification" : "[{\"operation\":\"shift\",\"spec\":{\"BATTERY_ID\":\"BATTERY_ID\",\"DEVICE_ID\":\"DEVICE_ID\",\"TIMESTAMP_MS\":\"TIMESTAMP_MS\",\"VOLTAGE_MV\":\"VOLTAGE_MV\",\"CURRENT_MA\":\"CURRENT_MA\",\"TEMPERATURE_C\":\"TEMPERATURE_C\",\"STATE_OF_CHARGE_PCT\":\"STATE_OF_CHARGE_PCT\",\"STATE_OF_HEALTH_PCT\":\"STATE_OF_HEALTH_PCT\",\"CYCLE_COUNT\":\"CYCLE_COUNT\",\"CAPACITY_REMAINING_MAH\":\"CAPACITY_REMAINING_MAH\",\"IS_CHARGING\":\"IS_CHARGING\",\"ERROR_CODE\":\"ERROR_CODE\"}}]"
-      },
-      "propertyDescriptors" : {
-        "JSON Source" : {
-          "displayName" : "JSON Source",
-          "dynamic" : false,
-          "identifiesControllerService" : false,
-          "name" : "JSON Source",
-          "sensitive" : false
-        },
-        "Jolt Transform" : {
-          "displayName" : "Jolt Transform",
-          "dynamic" : false,
-          "identifiesControllerService" : false,
-          "name" : "Jolt Transform",
-          "sensitive" : false
-        },
-        "JSON Source Attribute" : {
-          "displayName" : "JSON Source Attribute",
-          "dynamic" : false,
-          "identifiesControllerService" : false,
-          "name" : "JSON Source Attribute",
-          "sensitive" : false
-        },
-        "Max String Length" : {
-          "displayName" : "Max String Length",
-          "dynamic" : false,
-          "identifiesControllerService" : false,
-          "name" : "Max String Length",
-          "sensitive" : false
-        },
-        "Transform Cache Size" : {
-          "displayName" : "Transform Cache Size",
-          "dynamic" : false,
-          "identifiesControllerService" : false,
-          "name" : "Transform Cache Size",
-          "sensitive" : false
-        },
-        "Retain Unicode Escape Sequences" : {
-          "displayName" : "Retain Unicode Escape Sequences",
-          "dynamic" : false,
-          "identifiesControllerService" : false,
-          "name" : "Retain Unicode Escape Sequences",
-          "sensitive" : false
-        },
-        "Custom Transformation Class Name" : {
-          "displayName" : "Custom Transformation Class Name",
-          "dynamic" : false,
-          "identifiesControllerService" : false,
-          "name" : "Custom Transformation Class Name",
-          "sensitive" : false
-        },
-        "Custom Module Directory" : {
-          "displayName" : "Custom Module Directory",
-          "dynamic" : false,
-          "identifiesControllerService" : false,
-          "name" : "Custom Module Directory",
-          "resourceDefinition" : {
-            "cardinality" : "MULTIPLE",
-            "resourceTypes" : [ "DIRECTORY", "FILE" ]
-          },
-          "sensitive" : false
-        },
-        "Pretty Print" : {
-          "displayName" : "Pretty Print",
-          "dynamic" : false,
-          "identifiesControllerService" : false,
-          "name" : "Pretty Print",
-          "sensitive" : false
-        },
-        "Jolt Specification" : {
-          "displayName" : "Jolt Specification",
-          "dynamic" : false,
-          "identifiesControllerService" : false,
-          "name" : "Jolt Specification",
-          "resourceDefinition" : {
-            "cardinality" : "SINGLE",
-            "resourceTypes" : [ "FILE", "TEXT" ]
-          },
-          "sensitive" : false
-        }
-      },
-      "retriedRelationships" : [ ],
-      "retryCount" : 10,
-      "runDurationMillis" : 0,
-      "scheduledState" : "ENABLED",
-      "schedulingPeriod" : "0 sec",
-      "schedulingStrategy" : "TIMER_DRIVEN",
-      "style" : { },
-      "type" : "org.apache.nifi.processors.jolt.JoltTransformJSON",
-      "yieldDuration" : "1 sec"
-    }, {
-      "autoTerminatedRelationships" : [ ],
+      "autoTerminatedRelationships" : [ "parse.failure" ],
       "backoffMechanism" : "PENALIZE_FLOWFILE",
       "bulletinLevel" : "WARN",
       "bundle" : {
@@ -631,15 +684,15 @@
       "comments" : "",
       "componentType" : "PROCESSOR",
       "concurrentlySchedulableTaskCount" : 1,
-      "executionNode" : "ALL",
+      "executionNode" : "PRIMARY",
       "groupIdentifier" : "flow-contents-group",
       "identifier" : "a4405b7e-0273-335b-be5c-8d529ae88ede",
       "maxBackoffPeriod" : "10 mins",
       "name" : "ConsumeMQTT - HiveMQ",
       "penaltyDuration" : "30 sec",
       "position" : {
-        "x" : -136.0,
-        "y" : -584.0
+        "x" : -176.0,
+        "y" : -592.0
       },
       "properties" : {
         "Max Queue Size" : "10000",
@@ -843,24 +896,24 @@
       "name" : "PublishSnowpipeStreaming - Telemetry",
       "penaltyDuration" : "30 sec",
       "position" : {
-        "x" : -144.0,
-        "y" : -72.0
+        "x" : -176.0,
+        "y" : -24.0
       },
       "properties" : {
         "Table" : "MQTT_TELEMETRY",
         "Transfer Strategy" : "FILE_FRAGMENTS",
         "File Fragment Size" : "64 MB",
         "Offset Tracking Timeout" : "90 s",
-        "Channel Group" : "BATTERY-STREAM",
+        "Channel Group" : "BATT-47858",
         "Schema" : "MQTT",
-        "Pipe" : "MQTT_STREAMING_PIPE",
+        "Pipe" : "MQTT_TELEMETRY-STREAMING",
         "Offset Tracking Resolution" : "DISABLED",
         "Role" : "SYSADMIN",
         "Authentication Strategy" : "SNOWFLAKE_MANAGED",
         "Database" : "SNOWFLAKE_DEMO",
         "File Fragment Count" : "4",
         "Channel Insert Timeout" : "30 s",
-        "Destination Type" : "PIPE",
+        "Destination Type" : "TABLE",
         "Web Client Service Provider" : "7a8d644a-3bc3-3118-a157-75a73e54b50f"
       },
       "propertyDescriptors" : {
@@ -1021,6 +1074,103 @@
       "style" : { },
       "type" : "com.snowflake.openflow.runtime.processors.snowpipe.streaming.PublishSnowpipeStreaming",
       "yieldDuration" : "1 sec"
+    }, {
+      "autoTerminatedRelationships" : [ "failure", "original" ],
+      "backoffMechanism" : "PENALIZE_FLOWFILE",
+      "bulletinLevel" : "WARN",
+      "bundle" : {
+        "artifact" : "nifi-jolt-nar",
+        "group" : "org.apache.nifi",
+        "version" : "2026.4.16.18"
+      },
+      "comments" : "",
+      "componentType" : "PROCESSOR",
+      "concurrentlySchedulableTaskCount" : 1,
+      "executionNode" : "ALL",
+      "groupIdentifier" : "flow-contents-group",
+      "identifier" : "f1534cc2-5a5a-3847-be62-66284c9bd720",
+      "maxBackoffPeriod" : "10 mins",
+      "name" : "JoltTransformRecord",
+      "penaltyDuration" : "30 sec",
+      "position" : {
+        "x" : -176.0,
+        "y" : -328.0
+      },
+      "properties" : {
+        "Jolt Transform" : "jolt-transform-chain",
+        "Transform Cache Size" : "1",
+        "Record Writer" : "9cbc8f44-5594-3346-837d-2b1c152c1a68",
+        "Record Reader" : "af36eb88-f2f1-3007-ba38-b4b8a217a820",
+        "Jolt Specification" : "[{\"operation\":\"shift\",\"spec\":{\"BATTERY_ID\":\"BATTERY_ID\",\"DEVICE_ID\":\"DEVICE_ID\",\"TIMESTAMP_MS\":\"TIMESTAMP_MS\",\"VOLTAGE_MV\":\"VOLTAGE_MV\",\"CURRENT_MA\":\"CURRENT_MA\",\"TEMPERATURE_C\":\"TEMPERATURE_C\",\"STATE_OF_CHARGE_PCT\":\"STATE_OF_CHARGE_PCT\",\"STATE_OF_HEALTH_PCT\":\"STATE_OF_HEALTH_PCT\",\"CYCLE_COUNT\":\"CYCLE_COUNT\",\"CAPACITY_REMAINING_MAH\":\"CAPACITY_REMAINING_MAH\",\"IS_CHARGING\":\"IS_CHARGING\",\"ERROR_CODE\":\"ERROR_CODE\"}}]"
+      },
+      "propertyDescriptors" : {
+        "Jolt Transform" : {
+          "displayName" : "Jolt Transform",
+          "dynamic" : false,
+          "identifiesControllerService" : false,
+          "name" : "Jolt Transform",
+          "sensitive" : false
+        },
+        "Transform Cache Size" : {
+          "displayName" : "Transform Cache Size",
+          "dynamic" : false,
+          "identifiesControllerService" : false,
+          "name" : "Transform Cache Size",
+          "sensitive" : false
+        },
+        "Record Writer" : {
+          "displayName" : "Record Writer",
+          "dynamic" : false,
+          "identifiesControllerService" : true,
+          "name" : "Record Writer",
+          "sensitive" : false
+        },
+        "Custom Transformation Class Name" : {
+          "displayName" : "Custom Transformation Class Name",
+          "dynamic" : false,
+          "identifiesControllerService" : false,
+          "name" : "Custom Transformation Class Name",
+          "sensitive" : false
+        },
+        "Custom Module Directory" : {
+          "displayName" : "Custom Module Directory",
+          "dynamic" : false,
+          "identifiesControllerService" : false,
+          "name" : "Custom Module Directory",
+          "resourceDefinition" : {
+            "cardinality" : "MULTIPLE",
+            "resourceTypes" : [ "DIRECTORY", "FILE" ]
+          },
+          "sensitive" : false
+        },
+        "Record Reader" : {
+          "displayName" : "Record Reader",
+          "dynamic" : false,
+          "identifiesControllerService" : true,
+          "name" : "Record Reader",
+          "sensitive" : false
+        },
+        "Jolt Specification" : {
+          "displayName" : "Jolt Specification",
+          "dynamic" : false,
+          "identifiesControllerService" : false,
+          "name" : "Jolt Specification",
+          "resourceDefinition" : {
+            "cardinality" : "SINGLE",
+            "resourceTypes" : [ "FILE", "TEXT" ]
+          },
+          "sensitive" : false
+        }
+      },
+      "retriedRelationships" : [ ],
+      "retryCount" : 10,
+      "runDurationMillis" : 0,
+      "scheduledState" : "ENABLED",
+      "schedulingPeriod" : "0 sec",
+      "schedulingStrategy" : "TIMER_DRIVEN",
+      "style" : { },
+      "type" : "org.apache.nifi.processors.jolt.JoltTransformRecord",
+      "yieldDuration" : "1 sec"
     } ],
     "remoteProcessGroups" : [ ],
     "scheduledState" : "ENABLED",
@@ -1033,6 +1183,6 @@
   "snapshotMetadata" : {
     "author" : "JLEONG",
     "flowIdentifier" : "Battery-MQTT-Telemetry",
-    "timestamp" : 1776978077274
+    "timestamp" : 1777048107721
   }
 }
