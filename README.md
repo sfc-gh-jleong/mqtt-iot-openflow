@@ -1,121 +1,87 @@
 # mqtt-iot-openflow
 
-OpenFlow NiFi flow definitions for an end-to-end IoT battery telemetry pipeline built on Snowflake.
+OpenFlow NiFi flow definitions for an end-to-end factory OEE monitoring pipeline built on Snowflake.
 
 ## Architecture Overview
 
 ```
-[ mqtt-publisher runtime ]          [ mqtt-subscriber runtime ]
-  MQTT Publisher flow                 Battery MQTT Telemetry flow
-  GenerateFlowFile                    ConsumeMQTT
-       |                                   |
-  UpdateAttribute                    Flatten Payload (Jolt)
-       |                                   |
-  Publish to HiveMQ  ---- MQTT ----> PublishSnowpipeStreaming v2
-                                           |
-                              SNOWFLAKE_DEMO.MQTT.MQTT_TELEMETRY
+[ mqtt-publisher runtime ]            [ mqtt-subscriber runtime ]
+  MQTT Publisher flow                   Battery MQTT Telemetry flow
+  Generate Telemetry (GFF)              ConsumeMQTT - HiveMQ
+       |                                     |
+  Set MQTT Topic (UpdateAttr)          PublishSnowpipeStreaming v2
+       |                                     |
+  Publish to HiveMQ ---MQTT--->   SNOWFLAKE_DEMO.MQTT_OEE.MACHINE_TELEMETRY
+  topic: factory/oee                         |
+                                    DT_MACHINE_LATEST  (DOWNSTREAM)
+                                         |          |
+                               DT_OEE_5MIN_STATS   DT_OEE_HEALTH_MONITOR
+                               (DOWNSTREAM)        (1 minute)
 ```
 
-Both runtimes connect to the same **HiveMQ Cloud** MQTT broker over TLS (port 8883). The publisher generates synthetic IoT battery telemetry every 5 seconds; the subscriber consumes it and lands it in Snowflake for downstream analytics.
+Both runtimes connect to the same **HiveMQ Cloud** MQTT broker over TLS (port 8883). The publisher generates synthetic factory machine telemetry every 5 seconds; the subscriber consumes it and streams it into Snowflake via Snowpipe Streaming v2 for downstream OEE analytics.
 
 ---
 
 ## Folders
 
-### `mqtt-publisher/`
+| Folder | Runtime | Flow | Purpose |
+|--------|---------|------|---------|
+| [`mqtt-publisher/`](mqtt-publisher/) | `mqttpublisher` | *MQTT Publisher* | Generate and publish synthetic machine telemetry |
+| [`mqtt-subscriber/`](mqtt-subscriber/) | `mqtt` | *Battery MQTT Telemetry* | Subscribe, ingest, and stream to Snowflake |
 
-**Runtime:** `mqttpublisher` (Snowflake OpenFlow SPCS runtime)
+Each folder contains:
+- `README.md` — detailed documentation for that runtime
+- `flow.json` — exported NiFi process group definition (for import/restore)
 
-**Flow:** *MQTT Publisher*
+---
 
-Generates synthetic IoT battery telemetry and publishes it to HiveMQ Cloud on topic `battery/telemetry`.
+## Publisher — `mqtt-publisher/`
 
-**Processors:**
-| Processor | Role |
-|-----------|------|
-| `Generate Telemetry` (GenerateFlowFile) | Produces a JSON battery record every 5 seconds using NiFi Expression Language for randomised values across 5 batteries and 3 devices |
-| `Set MQTT Topic` (UpdateAttribute) | Sets the `mqtt.topic` attribute to `battery/telemetry` |
-| `Publish to HiveMQ` (PublishMQTT) | Publishes the FlowFile content to HiveMQ Cloud over TLS (ssl://) with username/password authentication |
+**Runtime:** `mqttpublisher` | **Topic:** `factory/oee`
+
+Processors: `Generate Telemetry` → `Set MQTT Topic` → `Publish to HiveMQ`
 
 **Generated payload example:**
 ```json
 {
-  "BATTERY_ID":             "BAT-003",
-  "DEVICE_ID":              "DEVICE-02",
-  "TIMESTAMP_MS":           "1745440000000",
-  "VOLTAGE_MV":             3720,
-  "CURRENT_MA":             2500,
-  "TEMPERATURE_C":          28,
-  "STATE_OF_CHARGE_PCT":    75,
-  "STATE_OF_HEALTH_PCT":    93,
-  "CYCLE_COUNT":            142,
-  "CAPACITY_REMAINING_MAH": 3800,
-  "IS_CHARGING":            "false",
-  "ERROR_CODE":             "NONE"
+  "MACHINE_ID":      "MCH-003",
+  "LINE_ID":         "LINE-02",
+  "TIMESTAMP_MS":    "1745440000000",
+  "MACHINE_STATE":   "RUNNING",
+  "PARTS_PRODUCED":  7,
+  "PARTS_REJECTED":  1,
+  "CYCLE_TIME_MS":   3450,
+  "IDEAL_CYCLE_MS":  3000,
+  "SPEED_PCT":       85,
+  "TEMPERATURE_C":   63,
+  "VIBRATION_MM_S":  "8.4",
+  "FAULT_CODE":      "NONE",
+  "SHIFT_ID":        "SHIFT-A"
 }
 ```
 
-**Field reference:**
-| Field | Unit | Range |
-|-------|------|-------|
-| `VOLTAGE_MV` | millivolts | 2500-4200 (Li-ion cell range) |
-| `CURRENT_MA` | milliamps (positive = discharging) | 0-5000 |
-| `TEMPERATURE_C` | Celsius | 15-45 |
-| `STATE_OF_CHARGE_PCT` | percent | 0-100 |
-| `STATE_OF_HEALTH_PCT` | percent | 80-100 |
-| `CYCLE_COUNT` | count | 0-500 |
-| `CAPACITY_REMAINING_MAH` | milliamp-hours | 2500-5000 |
+---
+
+## Subscriber — `mqtt-subscriber/`
+
+**Runtime:** `mqtt` | **Topic filter:** `factory/oee/#`
+
+Processors: `ConsumeMQTT - HiveMQ` → `PublishSnowpipeStreaming`
+
+Streams directly into `SNOWFLAKE_DEMO.MQTT_OEE.MACHINE_TELEMETRY` via Snowpipe Streaming v2 (`DATA_SOURCE(TYPE => 'STREAMING')`) using `SNOWFLAKE_MANAGED` auth — no key-pair required.
 
 ---
 
-### `mqtt-subscriber/`
+## Snowflake Objects — `SNOWFLAKE_DEMO.MQTT_OEE`
 
-**Runtime:** `mqtt` (Snowflake OpenFlow SPCS runtime)
-
-**Flow:** *Battery MQTT Telemetry*
-
-Subscribes to HiveMQ Cloud on topic `battery/telemetry/#`, transforms the incoming messages, and streams them into Snowflake via Snowpipe Streaming v2.
-
-**Processors:**
-| Processor | Role |
-|-----------|------|
-| `ConsumeMQTT - HiveMQ` (ConsumeMQTT) | Subscribes to HiveMQ Cloud over TLS and receives battery telemetry messages |
-| `Flatten Payload` (JoltTransformJSON) | Shifts JSON field names from the publisher format to Snowflake column names |
-| `PublishSnowpipeStreaming - Telemetry` (PublishSnowpipeStreaming v2) | Streams transformed records directly into Snowflake via the Snowpipe Streaming API using SPCS managed authentication |
-
-**Snowflake destination:** `SNOWFLAKE_DEMO.MQTT.MQTT_TELEMETRY`
-
-Authentication uses `SNOWFLAKE_MANAGED` (SPCS session token) — no key-pair credentials required.
-
----
-
-## Snowflake Objects
-
-| Object | Details |
-|--------|---------|
-| Schema | `SNOWFLAKE_DEMO.MQTT` |
-| Landing table | `SNOWFLAKE_DEMO.MQTT.MQTT_TELEMETRY` |
-| Stage | `SNOWFLAKE_DEMO.MQTT.MQTT_INGEST_STAGE` |
-| Pipe | `SNOWFLAKE_DEMO.MQTT.MQTT_INGEST_PIPE` |
-
-**Table schema:**
-```sql
-CREATE TABLE SNOWFLAKE_DEMO.MQTT.MQTT_TELEMETRY (
-  BATTERY_ID              VARCHAR(20),
-  DEVICE_ID               VARCHAR(20),
-  TIMESTAMP_MS            VARCHAR(30),
-  VOLTAGE_MV              NUMBER,
-  CURRENT_MA              NUMBER,
-  TEMPERATURE_C           NUMBER,
-  STATE_OF_CHARGE_PCT     NUMBER,
-  STATE_OF_HEALTH_PCT     NUMBER,
-  CYCLE_COUNT             NUMBER,
-  CAPACITY_REMAINING_MAH  NUMBER,
-  IS_CHARGING             VARCHAR(5),
-  ERROR_CODE              VARCHAR(20),
-  INGEST_TIME             TIMESTAMP_LTZ DEFAULT CURRENT_TIMESTAMP()
-);
-```
+| Object | Type | Details |
+|--------|------|---------|
+| `MACHINE_TELEMETRY` | Table | 13-field OEE landing table + `INGEST_TIME` |
+| `OEE_STREAMING_PIPE` | Pipe | Snowpipe Streaming v2, owner: SYSADMIN |
+| `DT_MACHINE_LATEST` | Dynamic Table | Latest reading per machine (DOWNSTREAM) |
+| `DT_OEE_5MIN_STATS` | Dynamic Table | 5-min OEE aggregations — Availability, Performance, Quality (DOWNSTREAM) |
+| `DT_OEE_HEALTH_MONITOR` | Dynamic Table | Health classification per machine (1 minute) |
 
 ---
 
@@ -126,5 +92,7 @@ CREATE TABLE SNOWFLAKE_DEMO.MQTT.MQTT_TELEMETRY (
 | MQTT Broker | HiveMQ Cloud (TLS, port 8883) |
 | Publisher runtime | `mqttpublisher` — Snowflake OpenFlow SPCS |
 | Subscriber runtime | `mqtt` — Snowflake OpenFlow SPCS |
-| External Access Integration | `HIVEMQ_EAI` — covers HiveMQ Cloud and `api.github.com` |
-| Network rule | `OPENFLOW.OPENFLOW.MQTT_GITHUB_REGISTRY_NETWORK_RULE` |
+| External Access Integration | `HIVEMQ_EAI` |
+| Network Rule | `OPENFLOW.OPENFLOW.MQTT_GITHUB_REGISTRY_NETWORK_RULE` |
+| Snowflake Account | `SFSENORTHAMERICA-JLEONG_AWS1` |
+| Warehouse (DTs) | `COMPUTE_WH` |
