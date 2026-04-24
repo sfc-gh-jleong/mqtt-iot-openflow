@@ -257,7 +257,7 @@
         "SSL Context Service" : "f40e0ab7-6f40-3ce1-948b-e599db68cbcb",
         "Username" : "jleong",
         "Session Expiry Interval" : "24 hrs",
-        "Last Will Topic" : "battery/lastwill",
+        "Last Will Topic" : "factory/lastwill",
         "Topic" : "${mqtt.topic}",
         "MQTT Specification Version" : "4",
         "Retain Message" : "false",
@@ -440,7 +440,7 @@
         "File Size" : "0B",
         "Batch Size" : "1",
         "Unique FlowFiles" : "false",
-        "Custom Text" : "{\"BATTERY_ID\":\"BAT-00${random():mod(5):plus(1)}\",\"DEVICE_ID\":\"DEVICE-0${random():mod(3):plus(1)}\",\"TIMESTAMP_MS\":\"${now()}\",\"VOLTAGE_MV\":\"${random():mod(1700):plus(2500)}\",\"CURRENT_MA\":\"${random():mod(5000)}\",\"TEMPERATURE_C\":\"${random():mod(30):plus(15)}\",\"STATE_OF_CHARGE_PCT\":\"${random():mod(101)}\",\"STATE_OF_HEALTH_PCT\":\"${random():mod(21):plus(80)}\",\"CYCLE_COUNT\":\"${random():mod(500)}\",\"CAPACITY_REMAINING_MAH\":\"${random():mod(2500):plus(2500)}\",\"IS_CHARGING\":\"${random():mod(2):equals('0')}\",\"ERROR_CODE\":\"NONE\"}",
+        "Custom Text" : "{\"MACHINE_ID\":\"MCH-00${random():mod(5):plus(1)}\",\"LINE_ID\":\"LINE-0${random():mod(3):plus(1)}\",\"TIMESTAMP_MS\":\"${now()}\",\"MACHINE_STATE\":\"${random():mod(10):equals('0'):ifElse('FAULT','RUNNING')}\",\"PARTS_PRODUCED\":\"${random():mod(10):plus(1)}\",\"PARTS_REJECTED\":\"${random():mod(3)}\",\"CYCLE_TIME_MS\":\"${random():mod(1500):plus(3000)}\",\"IDEAL_CYCLE_MS\":\"3000\",\"SPEED_PCT\":\"${random():mod(40):plus(60)}\",\"TEMPERATURE_C\":\"${random():mod(50):plus(40)}\",\"VIBRATION_MM_S\":\"${random():mod(20):plus(1)}.${random():mod(10)}\",\"FAULT_CODE\":\"${random():mod(10):equals('0'):ifElse('ERR_OVERTEMP','NONE')}\",\"SHIFT_ID\":\"SHIFT-A\"}",
         "Character Set" : "UTF-8",
         "Data Format" : "Text"
       },
@@ -529,7 +529,7 @@
       "properties" : {
         "Store State" : "Do not store state",
         "Cache Value Lookup Cache Size" : "100",
-        "mqtt.topic" : "battery/telemetry"
+        "mqtt.topic" : "factory/oee"
       },
       "propertyDescriptors" : {
         "Delete Attributes Expression" : {
@@ -589,6 +589,6 @@
   "snapshotMetadata" : {
     "author" : "JLEONG",
     "flowIdentifier" : "MQTT-Publisher",
-    "timestamp" : 1776974211187
+    "timestamp" : 1777054634054
   }
 }
